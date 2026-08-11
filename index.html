@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suivi Apéro 32° — Préparation Trail</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #242836;
+    --border: #2e3344;
+    --text: #e4e6ef;
+    --text2: #8b90a5;
+    --accent: #f59e0b;
+    --accent2: #fb923c;
+    --green: #34d399;
+    --green-dim: rgba(52,211,153,.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,.12);
+    --red: #f87171;
+    --purple: #a78bfa;
+    --current: #f59e0b;
+    --current-dim: rgba(245,158,11,.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 140%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(245,158,11,.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    position: relative;
+  }
+  .header h1 span { color: var(--accent); }
+  .header-meta {
+    margin-top: .5rem;
+    color: var(--text2);
+    font-size: .85rem;
+    position: relative;
+  }
+  .header-meta strong { color: var(--text); font-weight: 600; }
+
+  /* ---- COUNTDOWN ---- */
+  .countdown-bar {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    position: relative;
+  }
+  .countdown-item {
+    text-align: center;
+  }
+  .countdown-item .num {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .countdown-item .label {
+    font-size: .7rem;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  /* ---- PROGRESS BAR ---- */
+  .progress-section {
+    padding: 1rem 1.5rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5rem;
+    font-size: .8rem;
+  }
+  .progress-header .left { color: var(--text2); }
+  .progress-header .right { color: var(--accent); font-weight: 600; }
+  .progress-track {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 3px;
+    transition: width .6s ease;
+  }
+
+  /* ---- STATS ROW ---- */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .75rem;
+    padding: 1rem 1.5rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .75rem;
+    text-align: center;
+  }
+  .stat-card .val {
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-card .lbl {
+    font-size: .7rem;
+    color: var(--text2);
+    margin-top: .15rem;
+  }
+
+  /* ---- D+ CHART ---- */
+  .chart-section {
+    padding: 1rem 1.5rem;
+  }
+  .chart-title {
+    font-size: .85rem;
+    font-weight: 600;
+    margin-bottom: .75rem;
+    color: var(--text2);
+  }
+  .chart-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 140px;
+    padding-top: 10px;
+  }
+  .bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 40px;
+  }
+  .bar-pair {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+  }
+  .bar {
+    width: 14px;
+    border-radius: 3px 3px 0 0;
+    transition: height .4s ease;
+    position: relative;
+  }
+  .bar.planned {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+  }
+  .bar.actual {
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+  }
+  .bar-label {
+    font-size: .65rem;
+    color: var(--text2);
+    white-space: nowrap;
+  }
+
+  /* ---- WEEK NAV ---- */
+  .week-nav {
+    display: flex;
+    gap: .5rem;
+    padding: .75rem 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .week-nav::-webkit-scrollbar { display: none; }
+  .week-pill {
+    flex-shrink: 0;
+    padding: .4rem .8rem;
+    border-radius: 20px;
+    font-size: .75rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text2);
+    transition: all .2s;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .week-pill:hover { border-color: var(--text2); }
+  .week-pill.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .week-pill.current {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .week-pill .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .week-pill .dot.done { background: var(--green); }
+  .week-pill .dot.in-progress { background: var(--accent); }
+  .week-pill .dot.upcoming { background: var(--text2); opacity: .4; }
+
+  /* ---- WEEK DETAIL ---- */
+  .week-detail {
+    padding: 0 1.5rem 1.5rem;
+  }
+  .week-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: .75rem;
+  }
+  .week-header h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .week-header h2 .tag {
+    font-size: .7rem;
+    font-weight: 500;
+    padding: .15rem .5rem;
+    border-radius: 10px;
+    margin-left: .5rem;
+    vertical-align: middle;
+  }
+  .week-header h2 .tag.regen { background: var(--blue-dim); color: var(--blue); }
+  .week-header h2 .tag.pointe { background: rgba(245,158,11,.12); color: var(--accent); }
+  .week-header h2 .tag.affut { background: rgba(167,139,250,.12); color: var(--purple); }
+  .week-header h2 .tag.course { background: rgba(248,113,113,.12); color: var(--red); }
+  .week-dates { font-size: .8rem; color: var(--text2); }
+
+  .week-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .5rem;
+    margin-bottom: 1rem;
+  }
+  .week-stat {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: .5rem;
+    text-align: center;
+  }
+  .week-stat .v { font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .week-stat .l { font-size: .65rem; color: var(--text2); }
+
+  /* ---- SESSION CARDS ---- */
+  .session-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: .5rem;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .session-card.done { border-left: 3px solid var(--green); }
+  .session-card.skipped { border-left: 3px solid var(--red); opacity: .6; }
+  .session-card.pending { border-left: 3px solid var(--border); }
+
+  .session-head {
+    display: flex;
+    align-items: center;
+    padding: .75rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    gap: .6rem;
+  }
+  .session-head:hover { background: var(--surface2); }
+
+  .session-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .9rem;
+    flex-shrink: 0;
+  }
+  .session-icon.ef { background: var(--blue-dim); }
+  .session-icon.cote { background: rgba(248,113,113,.12); }
+  .session-icon.quality { background: rgba(167,139,250,.12); }
+  .session-icon.long { background: var(--green-dim); }
+  .session-icon.renfo { background: rgba(245,158,11,.12); }
+
+  .session-info { flex: 1; min-width: 0; }
+  .session-name {
+    font-size: .85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .session-preview {
+    font-size: .72rem;
+    color: var(--text2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .session-status {
+    flex-shrink: 0;
+    font-size: .7rem;
+    padding: .2rem .5rem;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+  .session-status.done { background: var(--green-dim); color: var(--green); }
+  .session-status.pending { background: var(--surface2); color: var(--text2); }
+
+  .session-chevron {
+    flex-shrink: 0;
+    color: var(--text2);
+    transition: transform .2s;
+    font-size: .8rem;
+  }
+  .session-card.open .session-chevron { transform: rotate(90deg); }
+
+  .session-body {
+    display: none;
+    padding: 0 1rem .75rem;
+    font-size: .8rem;
+    color: var(--text2);
+    border-top: 1px solid var(--border);
+  }
+  .session-card.open .session-body { display: block; padding-top: .75rem; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .4rem .75rem;
+  }
+  .detail-item .dk { font-size: .65rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text2); }
+  .detail-item .dv { font-weight: 600; color: var(--text); }
+
+  .session-notes {
+    margin-top: .75rem;
+    padding-top: .75rem;
+    border-top: 1px dashed var(--border);
+    font-style: italic;
+  }
+  .session-notes .note-heading {
+    font-style: normal;
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: .6rem 0 .3rem;
+    letter-spacing: .01em;
+  }
+  .session-notes .note-heading:first-child { margin-top: 0; }
+  .session-notes .note-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .session-notes .note-list li {
+    font-style: normal;
+    font-size: .78rem;
+    color: var(--text);
+    padding: .25rem 0 .25rem .75rem;
+    position: relative;
+    line-height: 1.5;
+  }
+  .session-notes .note-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--text2);
+  }
+  .session-notes .note-list li a,
+  .session-notes a {
+    color: var(--blue);
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 500;
+  }
+  .session-notes .note-list li a:hover,
+  .session-notes a:hover {
+    text-decoration: underline;
+    color: #93bbfc;
+  }
+  .session-notes .note-text {
+    font-style: italic;
+    font-size: .78rem;
+    line-height: 1.5;
+  }
+
+  /* ---- PENDING SESSION DETAIL ---- */
+  .pending-detail {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .pd-block {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: .5rem .75rem;
+  }
+  .pd-block.pd-tips {
+    background: rgba(245,158,11,.08);
+    border: 1px solid rgba(245,158,11,.2);
+  }
+  .pd-label {
+    font-size: .7rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: .2rem;
+  }
+  .pd-tips .pd-label { color: var(--accent2); }
+  .pd-text {
+    font-size: .78rem;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* ---- HR ZONES REF ---- */
+  .zones-section {
+    padding: 0 1.5rem 1.5rem;
+  }
+  .zones-title {
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--text2);
+    margin-bottom: .5rem;
+  }
+  .zones-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .75rem 1rem;
+  }
+  .zone-row {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .3rem 0;
+    font-size: .78rem;
+  }
+  .zone-bar {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ---- OBSERVATIONS ---- */
+  .obs-section {
+    padding: 0 1.5rem 2rem;
+  }
+  .obs-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  .obs-card h3 {
+    font-size: .85rem;
+    font-weight: 600;
+    margin-bottom: .5rem;
+  }
+  .obs-item {
+    font-size: .8rem;
+    color: var(--text2);
+    padding: .25rem 0;
+  }
+  .obs-item strong { color: var(--text); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: .7rem;
+    color: var(--text2);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (min-width: 640px) {
+    .stats-row { grid-template-columns: repeat(4, 1fr); }
+    .week-stats { grid-template-columns: repeat(4, 1fr); }
+    .detail-grid { grid-template-columns: repeat(4, 1fr); }
+    body { max-width: 720px; margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script src="data.js"></script>
+<script>
+// DATA — chargé depuis data.js (script précédent)
+
+// ============================================================
+// COMPUTED
+// ============================================================
+function getCurrentWeek() {
+  const now = new Date();
+  for (let i = 0; i < WEEKS.length; i++) {
+    const wStart = new Date(PLAN_START);
+    wStart.setDate(wStart.getDate() + i * 7);
+    const wEnd = new Date(wStart);
+    wEnd.setDate(wEnd.getDate() + 6);
+    if (now >= wStart && now <= wEnd) return WEEKS[i].id;
+  }
+  if (now < PLAN_START) return 1;
+  return WEEKS[WEEKS.length - 1].id;
+}
+
+function getWeekStatus(week) {
+  const current = getCurrentWeek();
+  if (week.id < current) {
+    const done = week.sessions.filter(s => s.status === 'done').length;
+    return done > 0 ? 'done' : 'upcoming';
+  }
+  if (week.id === current) return 'in-progress';
+  return 'upcoming';
+}
+
+function countDone() {
+  return WEEKS.reduce((n, w) => n + w.sessions.filter(s => s.status === 'done').length, 0);
+}
+function countTotal() {
+  return WEEKS.reduce((n, w) => n + w.sessions.length, 0);
+}
+function totalActualDplus() {
+  let d = 0;
+  WEEKS.forEach(w => {
+    if (w.actual_dplus) d += w.actual_dplus;
+    w.sessions.forEach(s => {
+      if (s.actual && s.actual.dplus) d += s.actual.dplus;
+    });
+  });
+  return d;
+}
+function totalPlannedDplus() {
+  return WEEKS.reduce((s, w) => s + (w.planned_dplus || 0), 0);
+}
+
+function daysUntilRace() {
+  const now = new Date();
+  now.setHours(0,0,0,0);
+  const r = new Date(RACE_DATE);
+  r.setHours(0,0,0,0);
+  return Math.max(0, Math.ceil((r - now) / 86400000));
+}
+
+function weeksUntilRace() {
+  return Math.ceil(daysUntilRace() / 7);
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+let selectedWeek = getCurrentWeek();
+
+// ============================================================
+// PENDING SESSION DETAIL
+// ============================================================
+function getPendingSessionPlan(s) {
+  // Cas spécial : course
+  if (s.id === 'RACE') {
+    return {
+      warmup: '20 min avant le départ : trot léger 10 min Z1 + 3–4 accélérations progressives de 20 s',
+      main: '32 km / 1000 m D+ — Objectif 3h45–4h30. Partir conservateur en Z2, accélérer à mi-course si bonnes sensations.',
+      cooldown: 'Marche 10 min post-arrivée + hydratation immédiate + étirements doux le soir',
+      zones: '0–15 km : Z2 strict (127–146 bpm) · 15–25 km : Z2–Z3 (jusqu\'à 155) · 25–32 km : selon sensations, Z3–Z4 accepté',
+      tips: 'Petit-déjeuner 3h avant. Emporter 2 gels + 500 ml mini. Ne pas suivre les rapides au départ. Marche active en montée pour préserver les quadriceps.'
+    };
+  }
+  switch(s.type) {
+    case 'ef':
+      return {
+        warmup: '10 min marche rapide → trot progressif en Z1 (< 127 bpm)',
+        main: s.planned + ' — Maintenir une allure confortable à ~5:25–5:40/km sur plat',
+        cooldown: '5 min trot Z1 + marche + étirements légers',
+        zones: 'Z2 endurance fondamentale (127–146 bpm) · Allure cible ~5:30/km',
+        tips: 'Rester conversationnel. Ralentir si FC > 146. En chaleur (> 30°C), accepter +10 bpm et allonger le retour au calme.'
+      };
+    case 'cote':
+      return {
+        warmup: '15 min EF progressive Z2 (127–146 bpm) en approche de la côte',
+        main: s.planned + ' — Montée dynamique, effort contrôlé. Redescente en trot léger Z1–Z2.',
+        cooldown: '10 min EF Z2 souple retour + étirements quadriceps/mollets',
+        zones: 'Montée : Z4–Z5 (≤ 169 bpm) · Descente/récup : trot Z1–Z2 (< 140 bpm)',
+        tips: 'Marche 15–20 s en bas si FC > 130 avant de repartir. Plafonner à 18–22 reps max. Privilégier créneau frais (< 25°C).'
+      };
+    case 'quality': {
+      let zones, tips;
+      if (s.planned.includes('Z5') || s.name.includes('VMA')) {
+        zones = 'Blocs rapides : Z5 (165–172 bpm) · Allure 3:22–3:43/km · Récup trot Z1–Z2';
+        tips = 'Rester relâché, pas de crispation. Viser régularité entre les reps. Si FC ne redescend pas sous 140 en récup, allonger le trot.';
+      } else if (s.planned.includes('Z3')) {
+        zones = 'Blocs : Z3 haut (146–155 bpm) · Allure ~4:50–5:10/km · Récup trot Z2';
+        tips = 'Allure course ! Se concentrer sur les sensations et le pied réactif. Ne pas forcer au-delà de Z3.';
+      } else {
+        zones = 'Blocs seuil : Z4 (155–165 bpm) · Allure 4:10–4:25/km · Récup trot Z2';
+        tips = 'Ne pas partir trop vite sur le 1er bloc (laisser la FC monter). Respecter les temps de récupération. Arrêter si FC max > 172.';
+      }
+      return {
+        warmup: "10 min EF progressive Z2 (terminer à ~140 bpm)",
+        main: s.planned,
+        cooldown: "5–10 min retour au calme trot Z1 + étirements",
+        zones: zones,
+        tips: tips
+      };
+    }
+    case 'long':
+      return {
+        warmup: '15 min progressif : marche → Z1 → Z2 (atteindre ~130 bpm avant de lancer)',
+        main: s.planned + ' — Piloter à la FC, pas à l\'allure. Marche active en montée > 10%.',
+        cooldown: '10 min Z1 + marche 5 min + étirements complets',
+        zones: 'Z2 dominante (127–146 bpm) · Pointes Z3 acceptées en côte · Allure trail selon terrain',
+        tips: 'Hydratation toutes les 20 min (~150 ml). Nutrition solide si > 1h30 (barre, gel). Emmener téléphone chargé. Pas de chien si > 25°C.'
+      };
+    case 'renfo':
+      if (s.notes) return null; // notes contain the full plan — rendered by formatNotes
+      return {
+        warmup: '5 min mobilité articulaire (hanches, chevilles, épaules)',
+        main: s.planned,
+        cooldown: 'Étirements doux 5 min',
+        zones: 'Pas de cible FC — travail musculaire',
+        tips: 'Contrôler les mouvements, pas de charges lourdes la veille d\'une séance de course.'
+      };
+    default:
+      return null;
+  }
+}
+
+function renderPendingDetail(s) {
+  const detail = getPendingSessionPlan(s);
+  if (!detail) return '';
+  let h = '<div class="pending-detail">';
+  h += `<div class="pd-block"><div class="pd-label">🔥 Échauffement</div><div class="pd-text">${detail.warmup}</div></div>`;
+  h += `<div class="pd-block"><div class="pd-label">💪 Corps de séance</div><div class="pd-text">${detail.main}</div></div>`;
+  h += `<div class="pd-block"><div class="pd-label">🧊 Retour au calme</div><div class="pd-text">${detail.cooldown}</div></div>`;
+  h += `<div class="pd-block"><div class="pd-label">❤️ Allures & Zones</div><div class="pd-text">${detail.zones}</div></div>`;
+  h += `<div class="pd-block pd-tips"><div class="pd-label">💡 Conseils</div><div class="pd-text">${detail.tips}</div></div>`;
+  h += '</div>';
+  return h;
+}
+
+function formatNotes(raw) {
+  if (!raw) return '';
+  // Check if structured notes (contains ## headings or • bullets)
+  const hasStructure = /^##\s|^•\s/m.test(raw);
+  if (!hasStructure) {
+    // Simple notes: just handle **bold**, [links](url), and line breaks
+    let t = raw
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+      .replace(/\n/g, '<br>');
+    return '<div class="note-text">' + t + '</div>';
+  }
+  // Structured notes: parse headings and bullet lists
+  const lines = raw.split('\n');
+  let html = '';
+  let inList = false;
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      if (inList) { html += '</ul>'; inList = false; }
+      continue;
+    }
+    // Heading
+    if (trimmed.startsWith('## ')) {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += '<div class="note-heading">' + trimmed.slice(3) + '</div>';
+      continue;
+    }
+    // Bullet
+    if (trimmed.startsWith('• ')) {
+      if (!inList) { html += '<ul class="note-list">'; inList = true; }
+      let content = trimmed.slice(2)
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+      html += '<li>' + content + '</li>';
+      continue;
+    }
+    // Plain text
+    if (inList) { html += '</ul>'; inList = false; }
+    let content = trimmed
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    html += '<div class="note-text">' + content + '</div>';
+  }
+  if (inList) html += '</ul>';
+  return html;
+}
+
+function typeIcon(type) {
+  switch(type) {
+    case 'ef': return '🏃';
+    case 'cote': return '⛰️';
+    case 'quality': return '⚡';
+    case 'long': return '🌲';
+    case 'renfo': return '🏋️';
+    default: return '🏃';
+  }
+}
+
+function render() {
+  const app = document.getElementById('app');
+  const current = getCurrentWeek();
+  const done = countDone();
+  const total = countTotal();
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  const days = daysUntilRace();
+  const weeks = weeksUntilRace();
+  const actualD = totalActualDplus();
+  const plannedD = totalPlannedDplus();
+  const selWeek = WEEKS.find(w => w.id === selectedWeek);
+  const maxPlanned = Math.max(...WEEKS.map(w => w.planned_dplus || 0), 1);
+
+  let html = '';
+
+  // Header
+  html += `
+    <div class="header">
+      <h1>🏔️ <span>Apéro 32°</span></h1>
+      <div class="header-meta">
+        <strong>32 km</strong> · <strong>1 000 m D+</strong> · 12 septembre 2026
+      </div>
+      <div class="countdown-bar">
+        <div class="countdown-item"><div class="num">J-${days}</div><div class="label">jours</div></div>
+        <div class="countdown-item"><div class="num">${weeks}</div><div class="label">semaines</div></div>
+        <div class="countdown-item"><div class="num">${done}/${total}</div><div class="label">séances</div></div>
+      </div>
+    </div>`;
+
+  // Progress
+  html += `
+    <div class="progress-section">
+      <div class="progress-header">
+        <span class="left">Progression globale</span>
+        <span class="right">${pct}%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>`;
+
+  // Stats
+  html += `
+    <div class="stats-row">
+      <div class="stat-card"><div class="val" style="color:var(--green)">${done}</div><div class="lbl">Réalisées</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--text2)">${total - done}</div><div class="lbl">Restantes</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--accent)">${actualD} m</div><div class="lbl">D+ réalisé</div></div>
+    </div>`;
+
+  // D+ Chart
+  html += `
+    <div class="chart-section">
+      <div class="chart-title">D+ par semaine (prévu vs réalisé)</div>
+      <div class="chart-container">
+        <div class="bar-chart">`;
+  WEEKS.forEach(w => {
+    if (w.id === 9) return; // skip race week
+    const pH = Math.max(4, ((w.planned_dplus || 0) / maxPlanned) * 120);
+    let aD = w.actual_dplus || 0;
+    w.sessions.forEach(s => { if (s.actual && s.actual.dplus) aD += s.actual.dplus; });
+    const aH = aD > 0 ? Math.max(4, (aD / maxPlanned) * 120) : 0;
+    html += `
+      <div class="bar-group">
+        <div class="bar-pair">
+          <div class="bar planned" style="height:${pH}px" title="Prévu: ~${w.planned_dplus} m"></div>
+          ${aH > 0 ? `<div class="bar actual" style="height:${aH}px" title="Réalisé: ${aD} m"></div>` : ''}
+        </div>
+        <div class="bar-label">${w.label}</div>
+      </div>`;
+  });
+  html += `</div>
+        <div style="display:flex;gap:1rem;margin-top:.5rem;justify-content:center">
+          <span style="font-size:.65rem;color:var(--text2)">◼ Prévu</span>
+          <span style="font-size:.65rem;color:var(--accent)">◼ Réalisé</span>
+        </div>
+      </div>
+    </div>`;
+
+  // Week nav
+  html += `<div class="week-nav">`;
+  WEEKS.forEach(w => {
+    const status = getWeekStatus(w);
+    const isActive = w.id === selectedWeek;
+    html += `<div class="week-pill${isActive ? ' active' : ''}${w.id === current && !isActive ? ' current' : ''}" onclick="selectWeek(${w.id})">
+      <span class="dot ${status}"></span>${w.label}
+    </div>`;
+  });
+  html += `</div>`;
+
+  // Week detail
+  if (selWeek) {
+    const tagHtml = selWeek.tag ? `<span class="tag ${selWeek.tag}">${selWeek.tagLabel}</span>` : '';
+    const wDone = selWeek.sessions.filter(s => s.status === 'done').length;
+    let wActualD = selWeek.actual_dplus || 0;
+    selWeek.sessions.forEach(s => { if (s.actual && s.actual.dplus) wActualD += s.actual.dplus; });
+
+    html += `
+    <div class="week-detail">
+      <div class="week-header">
+        <h2>Semaine ${selWeek.id} ${tagHtml}</h2>
+        <span class="week-dates">${selWeek.dates}</span>
+      </div>
+      <div class="week-stats">
+        <div class="week-stat"><div class="v">${wDone}/${selWeek.sessions.length}</div><div class="l">Séances</div></div>
+        <div class="week-stat"><div class="v">~${selWeek.planned_dplus} m</div><div class="l">D+ prévu</div></div>
+        <div class="week-stat"><div class="v">${wActualD > 0 ? wActualD + ' m' : '—'}</div><div class="l">D+ réalisé</div></div>
+      </div>`;
+
+    selWeek.sessions.forEach(s => {
+      const statusCls = s.status === 'done' ? 'done' : 'pending';
+      const statusLabel = s.status === 'done' ? 'Fait' : 'À faire';
+      html += `
+      <div class="session-card ${statusCls}" id="card-${selWeek.id}-${s.id}">
+        <div class="session-head" onclick="toggleCard(${selWeek.id},'${s.id}')">
+          <div class="session-icon ${s.type}">${typeIcon(s.type)}</div>
+          <div class="session-info">
+            <div class="session-name">Séance ${s.id} — ${s.name}</div>
+            <div class="session-preview">${s.planned}</div>
+          </div>
+          <div class="session-status ${statusCls}">${statusLabel}</div>
+          <div class="session-chevron">›</div>
+        </div>
+        <div class="session-body">
+          <div style="margin-bottom:.4rem;font-size:.72rem;color:var(--text2)"><strong style="color:var(--text)">Prévu :</strong> ${s.planned}</div>`;
+
+      if (s.actual) {
+        html += `<div class="detail-grid">`;
+        if (s.actual.distance != null) html += `<div class="detail-item"><div class="dk">Distance</div><div class="dv">${s.actual.distance} km</div></div>`;
+        if (s.actual.duration) html += `<div class="detail-item"><div class="dk">Durée</div><div class="dv">${s.actual.duration}</div></div>`;
+        if (s.actual.dplus != null) html += `<div class="detail-item"><div class="dk">D+</div><div class="dv">${s.actual.dplus} m</div></div>`;
+        if (s.actual.fc_avg != null) html += `<div class="detail-item"><div class="dk">FC moy</div><div class="dv">${s.actual.fc_avg} bpm</div></div>`;
+        if (s.actual.fc_max != null) html += `<div class="detail-item"><div class="dk">FC max</div><div class="dv">${s.actual.fc_max} bpm</div></div>`;
+        if (s.actual.pace) html += `<div class="detail-item"><div class="dk">Allure</div><div class="dv">${s.actual.pace}</div></div>`;
+        html += `</div>`;
+      } else {
+        html += renderPendingDetail(s);
+      }
+
+      if (s.notes) {
+        html += `<div class="session-notes">${formatNotes(s.notes)}</div>`;
+      }
+
+      html += `</div></div>`;
+    });
+
+    html += `</div>`;
+  }
+
+  // Zones
+  html += `
+    <div class="zones-section">
+      <div class="zones-title">❤️ Zones cardiaques (Karvonen)</div>
+      <div class="zones-content">`;
+  ZONES.forEach(z => {
+    html += `<div class="zone-row"><div class="zone-bar" style="background:${z.color}"></div><strong>${z.name}</strong><span style="color:var(--text2);margin-left:auto">${z.range}</span></div>`;
+  });
+  html += `<div style="font-size:.65rem;color:var(--text2);margin-top:.5rem">VMA 17 km/h · FCmax 178 · FC repos ~50 · FC réserve 128</div>`;
+  html += `</div></div>`;
+
+  // Observations
+  html += `
+    <div class="obs-section">
+      <div class="obs-card">
+        <h3>Observations générales</h3>
+        <div class="obs-item"><strong>Forme :</strong> ${OBSERVATIONS.forme}</div>
+        <div class="obs-item"><strong>Points forts :</strong> ${OBSERVATIONS.points_forts}</div>
+        <div class="obs-item"><strong>À surveiller :</strong> ${OBSERVATIONS.a_surveiller}</div>
+        <div class="obs-item"><strong>Ajustements :</strong> ${OBSERVATIONS.ajustements}</div>
+      </div>
+    </div>`;
+
+  // Footer
+  html += `<footer>Suivi Apéro 32° · Dernière MAJ : ${new Date().toLocaleDateString('fr-FR')}</footer>`;
+
+  app.innerHTML = html;
+}
+
+function selectWeek(id) {
+  selectedWeek = id;
+  render();
+  // scroll nav into view
+  setTimeout(() => {
+    const pill = document.querySelector('.week-pill.active');
+    if (pill) pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }, 50);
+}
+
+const openCards = new Set();
+
+function toggleCard(weekId, sessionId) {
+  const key = `${weekId}-${sessionId}`;
+  const el = document.getElementById(`card-${key}`);
+  if (!el) return;
+  if (openCards.has(key)) {
+    openCards.delete(key);
+    el.classList.remove('open');
+  } else {
+    openCards.add(key);
+    el.classList.add('open');
+  }
+}
+
+// Initial render
+render();
+</script>
+</body>
+</html>

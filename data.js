@@ -1,0 +1,301 @@
+// ============================================================
+// DATA — Mettre à jour ce fichier après chaque séance
+// Dernière MAJ : 11 août 2026 (S5-B adapté + S5-R1)
+// ============================================================
+
+const RACE_DATE = new Date('2026-09-12');
+const PLAN_START = new Date('2026-07-13');
+
+const ZONES = [
+  { name: 'Z1 Récup', range: '< 127 bpm', color: '#94a3b8' },
+  { name: 'Z2 EF', range: '127–146 bpm', color: '#60a5fa' },
+  { name: 'Z3 Tempo', range: '146–155 bpm', color: '#34d399' },
+  { name: 'Z4 Seuil', range: '155–165 bpm', color: '#f59e0b' },
+  { name: 'Z5 VMA', range: '165–172 bpm', color: '#f87171' },
+  { name: 'Côtes max', range: '≤ 169 bpm', color: '#a78bfa' },
+];
+
+const OBSERVATIONS = {
+  forme: 'Début de bloc solide. Grosse capacité aérobie confirmée (FC maîtrisée, pas de dérive sur sortie longue Aubrac). Attention à ne pas surcharger trop vite.',
+  points_forts: 'Bonne tenue du plafond FC (165 max), séances menées à terme. Cheville droite confirmée guérie. Renfo/proprio intégré en routine hebdo.',
+  a_surveiller: 'Chaleur de midi → résolu (créneaux matinaux). Charge D+ systématiquement au-dessus du plan (S1 +520 m, S2 +190 m, S3 +313 m). Côte de remplacement S4–S6 : récup cardiaque insuffisante au-delà de 15 reps.',
+  ajustements: 'Créneaux frais pour côte + sortie longue. Côte alternative (~165 m / 13 m D+ / 8%) plafonnée à 18–22 reps max. Marche 15–20 sec en bas quand FC > 130.',
+};
+
+const WEEKS = [
+  // ──────────────────────────────────────────────
+  // SEMAINE 1
+  // ──────────────────────────────────────────────
+  {
+    id: 1, label: 'S1', dates: '13–19 juil', tag: null,
+    planned_dplus: 350, actual_dplus: null,
+    sessions: [
+      {
+        id: 'A', name: 'EF 40 min', type: 'ef',
+        planned: '40 min Z2, FC 116–134',
+        status: 'done',
+        actual: { distance: 7.49, duration: '41 min 58 s', dplus: 0, fc_avg: 137, fc_max: 154, pace: '5:36/km' },
+        notes: '14 juil., midi (12h18). Terrain plat côtier Lattes/Pérols. FC moy légèrement au-dessus de Z2 — attendu avec la chaleur. Rythme et durée conformes.'
+      },
+      {
+        id: 'B', name: '6 × côte 50 m', type: 'cote',
+        planned: '6 répétitions, FC ≤ 165 en montée',
+        status: 'done',
+        actual: { distance: 9.81, duration: '1 h 06', dplus: 293, fc_avg: 140, fc_max: 165 },
+        notes: '15 juil., midi (~29 °C). La Gardiole. Difficile — pause en haut de chaque montée, marche sur les 2 dernières. FC max 165 = plafond atteint. Viser créneau frais pour la suite.'
+      },
+      {
+        id: 'C', name: 'Renfo + tapis 20 min', type: 'renfo',
+        planned: "Fartlek 35 min → remplacé par renfo + tapis (cheville)",
+        status: 'done',
+        actual: { duration: '~45 min', dplus: 0 },
+        notes: '19 juil. Salle : renfo dos/abdos/épaules + 20 min tapis à 6:00/km (~120 bpm, ~3,3 km). Aucune douleur cheville. Fartlek reporté en S2.'
+      },
+      {
+        id: 'D', name: 'Sortie longue 1h30', type: 'long',
+        planned: 'EF trail 1h30, Gardiole si dispo',
+        status: 'done',
+        actual: { distance: 18.2, duration: '2 h 21', dplus: 577, fc_avg: 124, fc_max: 159, pace: '7:44/km' },
+        notes: '18 juil. Prades d\'Aubrac (alt. 815–1123 m). Dépassée : 2h21 vs 1h30, 577 m D+ vs ~100 prévu. FC parfaitement maîtrisée en Z2, aucune dérive (126→121). ⚠️ Petite gêne cheville droite externe.'
+      }
+    ]
+  },
+
+  // ──────────────────────────────────────────────
+  // SEMAINE 2 — ajustée (consolidation post S1)
+  // ──────────────────────────────────────────────
+  {
+    id: 2, label: 'S2', dates: '20–26 juil', tag: null,
+    planned_dplus: 550, actual_dplus: null,
+    sessions: [
+      {
+        id: 'A', name: 'EF 45 min', type: 'ef',
+        planned: '45 min Z2 (FC 116–134), terrain plat',
+        status: 'done',
+        actual: { distance: 7.58, duration: '44 min', dplus: 64, fc_avg: 130, fc_max: 141, pace: '5:49/km' },
+        notes: '20 juil., midi. Montpellier/Castelnau. EF bien calibré, FC moy 130 en Z2. Aucune gêne cheville — 1er test extérieur post-gêne réussi.'
+      },
+      {
+        id: 'B', name: '6 × côte 50 m', type: 'cote',
+        planned: '6 rép. (réintro prudente, pas 8×), FC ≤ 170, créneau frais',
+        status: 'done',
+        actual: { distance: 10.0, duration: '1 h 00', dplus: 284, fc_avg: 139, fc_max: 164 },
+        notes: '22 juil., matin (7h42). La Gardiole. Nette progression vs S1 : même D+/FC mais 6 min plus rapide (1h00 vs 1h06). Créneau matinal = tout changé. Aucun problème cheville.'
+      },
+      {
+        id: 'C', name: 'Fartlek 35 min', type: 'quality',
+        planned: "10' EF + 5×(2' Z4 / 2' Z2) + 5' EF (reporté de S1)",
+        status: 'done',
+        actual: { distance: 8.67, duration: '47 min 52 s', dplus: 62, fc_avg: 141, fc_max: 168, pace: '5:31/km' },
+        notes: '23 juil., midi (12h24). Lattes/Castelnau. 5 accélérations ~2 min à 14–16 km/h. FC pointe des reps : 154→160→162→166→165 (Z4, pointes bas Z5). Réintroduction qualité réussie.'
+      },
+      {
+        id: 'R1', name: 'Renfo / proprio', type: 'renfo',
+        planned: 'Dos, abdos, proprioception cheville + genou',
+        status: 'done',
+        actual: { duration: '~45 min', dplus: 0 },
+        notes: '25 juil. Salle. Proprio cheville/genou consolide l\'articulation qui gênait en S1. Fait la veille de la sortie longue sans gêne → bon signe.'
+      },
+      {
+        id: 'D', name: 'Sortie longue 1h30–1h45', type: 'long',
+        planned: 'EF trail, 250–350 m D+, terrain peu technique',
+        status: 'done',
+        actual: { distance: 10.33, duration: '1 h 16', dplus: 428, fc_avg: 126, fc_max: 151, pace: '7:39/km' },
+        notes: '26 juil., matin (7h19). La Gardiole sud (alt. 42–192 m). FC moy 126 en Z2, aucune dérive (128→125). Répartition : 18% Z1 / 52% Z2 / 30% Z3, 0% Z4–Z5. Zéro douleur cheville. D+ un peu au-dessus (428 vs 250–350) mais durée sous le prévu.'
+      }
+    ]
+  },
+
+  // ──────────────────────────────────────────────
+  // SEMAINE 3
+  // ──────────────────────────────────────────────
+  {
+    id: 3, label: 'S3', dates: '27 juil – 2 août', tag: null,
+    planned_dplus: 700, actual_dplus: null,
+    sessions: [
+      {
+        id: 'A', name: 'EF 50 min', type: 'ef',
+        planned: '50 min Z2, terrain plat',
+        status: 'done',
+        actual: { distance: 9.31, duration: '51 min 10 s', dplus: 69, fc_avg: 129, fc_max: 142, pace: '5:29/km' },
+        notes: '28 juil., matin (7h11). Lattes. FC moy 129 en Z2, 0% Z4–Z5. Légère dérive (124→133) = chaleur matinale estivale. + Salle à midi : abdos, dos, proprio chevilles/genoux.'
+      },
+      {
+        id: 'B', name: '10 × côte 50 m', type: 'cote',
+        planned: '10 répétitions, FC ≤ 165, créneau frais',
+        status: 'done',
+        actual: { distance: 12.14, duration: '1 h 23', dplus: 469, fc_avg: 133, fc_max: 163 },
+        notes: '29 juil., matin (7h09). La Gardiole, 10 montées. Saut de charge réussi : 6→10 reps. FC max 163 sous plafond. Progression nette vs S1/S2 : +4 reps, D+ 469 m, FC moy plus basse (133 vs 139–140) = meilleure économie.'
+      },
+      {
+        id: 'C', name: 'Seuil 3×6\' (r=2\')', type: 'quality',
+        planned: "10' EF + 3×(6' Z4 / 2' trot) + 5' retour — remplace VMA 5×3'",
+        status: 'done',
+        actual: { distance: 8.27, duration: '40 min 19 s', dplus: 89, fc_avg: 145, fc_max: 164, pace: '4:52/km' },
+        notes: '31 juil., matin (7h42). Lattes. 1ère séance seuil soutenu. Allure régulière (4:15–4:16/km), FC progresse : 148→155→159. Bloc 1 en Z3 haut (normal 1ère fois), blocs 2–3 pleinement Z4. FC max 164 = plafond Z4, jamais dépassé. → Prêt pour 3×8\' en S5.'
+      },
+      {
+        id: 'D', name: 'Sortie longue 2h', type: 'long',
+        planned: 'EF trail 2h, 300–400 m D+',
+        status: 'done',
+        actual: { distance: 13.63, duration: '1 h 46', dplus: 386, fc_avg: 146, fc_max: 162, pace: '7:49/km' },
+        notes: '1er août, midi (14h15). La Gardiole sud. FC très au-dessus de Z2 (146 moy) → sortie seuil aérobie de facto (61% Z3 + 33% Z4). Écart purement thermique. ⚠️ Incident chien : malaise chaleur au km 9, porté ~2 km. Ne plus emmener le chien > 25 °C.'
+      },
+      {
+        id: 'R1', name: 'Renfo bas du corps', type: 'renfo',
+        planned: 'Routine salle hebdo',
+        status: 'done',
+        actual: { duration: '~45 min', dplus: 0 },
+        notes: '2 août. Salle : adducteurs/abducteurs (machines), abdos, proprio cheville+genou, squats sautés, gainage. Renfo spécifique trail (stabilité latérale, puissance montée).'
+      }
+    ]
+  },
+
+  // ──────────────────────────────────────────────
+  // SEMAINE 4 — Régénération
+  // ──────────────────────────────────────────────
+  {
+    id: 4, label: 'S4', dates: '3–9 août', tag: 'regen', tagLabel: 'Régénération',
+    planned_dplus: 250, actual_dplus: null,
+    sessions: [
+      {
+        id: 'A', name: 'EF 35 min', type: 'ef',
+        planned: '35 min Z2, terrain plat, récup',
+        status: 'done',
+        actual: { distance: 6.51, duration: '38 min 48 s', dplus: 73, fc_avg: 122, fc_max: 152, pace: '5:57/km' },
+        notes: '3 août, matin (6h52). Lattes. Récup parfaitement calibrée : 89% en Z2, FC moy 122, dérive quasi nulle (+4 bpm). Pic 152 ponctuel. Bonne entrée en S4 récup.'
+      },
+      {
+        id: 'B', name: '15 × côte remplacement', type: 'cote',
+        planned: '5–6 × grande côte → adapté 15 reps sur côte alternative (~165 m / 13 m D+ / 8%)',
+        status: 'done',
+        actual: { distance: 11.39, duration: '1 h 06', dplus: 194, fc_avg: 138, fc_max: 164 },
+        notes: '5 août, matin (6h44). Côte remplacement. ~15 montées. Brûlure quadriceps sur les 3 dernières. Récup cardiaque de + en + difficile (FC ne redescend plus sous 135). Drift : FC moy montées 141→158. → Plafonner à 18–22 reps max, ajouter marche en bas si FC > 130.'
+      },
+      {
+        id: 'R1', name: 'Salle — renfo léger', type: 'renfo',
+        planned: 'Renfo allégé (semaine régénération)',
+        status: 'done',
+        actual: { duration: '~40 min', dplus: 0 },
+        notes: '6 août. 3×10 squats bulgares (2 kg/main), 3×10 mollets, 3×60s planche, 1×30s gainage latéral/côté, 3×10 step-ups, 3×8 squats excentriques lents (5s descente).'
+      },
+      {
+        id: 'C', name: 'Fartlek léger 25 min', type: 'quality',
+        planned: "8' EF + 5×(1'30 Z3 haut / 2' Z2) + 5' retour — garder du rythme sans charge",
+        status: 'done',
+        actual: { distance: 5.95, duration: '30 min 27 s', dplus: 0, fc_avg: 132, fc_max: 149, pace: '5:12/km' },
+        notes: '7 août, matin (5h50). Lattes. 4 reps ~2 min à 13,4–13,8 km/h (4:21–4:28/km). Intensité Z2 haut / bas Z3 (max 149) = plus léger que prescrit, parfait pour récup. Créneau 5h50 = excellentes conditions.'
+      },
+      {
+        id: 'R2', name: 'Salle — renfo + proprio', type: 'renfo',
+        planned: 'Routine salle',
+        status: 'done',
+        actual: { duration: '~50 min', dplus: 0 },
+        notes: '8 août. Adducteurs/abducteurs, 3×1 min équilibre unipodal sur demi-ballon, 3×20 abdos, 2 min gainage ventral, 2×30s gainage latéral, 3 longueurs fentes marchées (6 kg/main), 4×15 mollets, 12 min proprio chevilles plan incliné.'
+      },
+      {
+        id: 'D', name: 'EF 1h15', type: 'long',
+        planned: 'Endurance fondamentale longue',
+        status: 'done',
+        actual: { distance: 13.01, duration: '1 h 23', dplus: 20, fc_avg: 132, fc_max: 145, pace: '6:21/km' },
+        notes: '9 août, matin (9h05). Lattes, terrain plat (alt. 2–12 m). Sensations pas géniales : fatigue résiduelle de la séance salle de la veille + mauvaise nuit (otite). Malgré ça, données cardio propres : 85% Z2 / 15% Z1, 0% Z3–Z5, FC moy 132, dérive modérée (+7 bpm, 129→136). Bonne clôture de S4 régénération. ⚠️ Surveiller otite avant relance S5.'
+      }
+    ]
+  },
+
+  // ──────────────────────────────────────────────
+  // SEMAINE 5
+  // ──────────────────────────────────────────────
+  {
+    id: 5, label: 'S5', dates: '10–16 août', tag: null,
+    planned_dplus: 900, actual_dplus: null,
+    sessions: [
+      {
+        id: 'A', name: 'EF 55 min', type: 'ef',
+        planned: '55 min Z2',
+        status: 'done',
+        actual: { distance: 10.23, duration: '58 min 43 s', dplus: 12, fc_avg: 127, fc_max: 144, pace: '5:44/km' },
+        notes: '10 août, fin d\'après-midi (18h27). Lattes, terrain plat (alt. −2 à 11 m). EF bien calibrée : FC moy 127 pile en bas de Z2, 40% Z1 / 60% Z2, 0% Z3–Z5. Dérive cardiaque notable (+14 bpm, 120→134) — chaleur résiduelle de fin de journée en août. Distance un peu au-dessus (10,2 km vs ~9–10 attendus) mais durée conforme (~59 min vs 55 prévues). Bonne reprise post-S4 régénération.'
+      },
+      { id: 'B', name: '18–20 × côte remplacement', type: 'cote', planned: '18–20 reps sur côte alternative (~165 m / 13 m D+ / 8%), même parcours que S4-B. Marche 15–20 s en bas si FC > 130. Créneau frais.', status: 'pending', actual: null, notes: null },
+      {
+        id: 'R1', name: 'Proprio / mobilité / gainage', type: 'renfo',
+        planned: 'Séance activation ~1h15, veille de côtes — zéro fatigue musculaire',
+        status: 'pending',
+        actual: null,
+        notes: '## Bloc 1 — Proprioception chevilles (~15 min)\n'
+          + '• Proprio plan incliné **latéral** (inversion/éversion) : 6 min [▶ Vidéo](https://www.youtube.com/watch?v=IRsMi-p1rw4)\n'
+          + '• Proprio plan incliné **sagittal** (1\'30 orteils hauts + 1\'30 talons hauts) : 3 min\n'
+          + '• Équilibre unipodal demi-ballon : 3×45 s / jambe\n'
+          + '\n## Bloc 2 — Mobilité chevilles + hanches (~15 min)\n'
+          + '• Knee-to-wall (dorsiflexion) : 3×10 / pied [▶ Vidéo](https://www.youtube.com/watch?v=pSMPd12mrg0)\n'
+          + '• Leg swings avant-arrière + latéral : 15 / côté [▶ Vidéo](https://www.youtube.com/watch?v=naW8u72lOzI)\n'
+          + '• 90/90 rotations hanches : 2×10 transitions [▶ Vidéo](https://www.youtube.com/watch?v=t4Zz6-aG8Iw)\n'
+          + '• Deep squat hold (prying) : 2×45 s [▶ Vidéo](https://www.youtube.com/watch?v=4pabcKldodc)\n'
+          + '\n## Bloc 3 — Activation jambes (~5 min)\n'
+          + '• Step-ups légers sans charge : 2×10 / jambe\n'
+          + '\n## Bloc 4 — Gainage + abdos + dos (~20–25 min)\n'
+          + '• Gainage ventral : 3×1 min\n'
+          + '• Gainage latéral : 2×45 s / côté\n'
+          + '• Abdos crunch : 3×20\n'
+          + '• Abdos obliques : 3×15 / côté\n'
+          + '• Relevé de dos (extensions lombaires) : 3×15'
+      },
+      { id: 'C', name: 'Seuil 3×8\' (r=2\'30)', type: 'quality', planned: "10' EF + 3×(8' Z4 / 2'30 trot) + 5' retour — 24' de Z4 soutenu (ajusté de 4×8')", status: 'pending', actual: null, notes: null },
+      { id: 'D', name: 'Trail 2h30 / 400–500 m D+', type: 'long', planned: 'Sortie longue trail', status: 'pending', actual: null, notes: null }
+    ]
+  },
+
+  // ──────────────────────────────────────────────
+  // SEMAINE 6 — Pointe
+  // ──────────────────────────────────────────────
+  {
+    id: 6, label: 'S6', dates: '17–23 août', tag: 'pointe', tagLabel: 'Pointe',
+    planned_dplus: 1100, actual_dplus: null,
+    sessions: [
+      { id: 'A', name: 'EF 55 min', type: 'ef', planned: '55 min Z2', status: 'pending', actual: null, notes: null },
+      { id: 'B', name: '12 × côte 50 m', type: 'cote', planned: '12 répétitions', status: 'pending', actual: null, notes: null },
+      { id: 'C', name: 'Seuil 3×10\' (r=3\')', type: 'quality', planned: "10' EF + 3×(10' Z4 / 3' trot) + 5' retour — 30' de Z4, séance-clé de la prépa", status: 'pending', actual: null, notes: null },
+      { id: 'D', name: 'Référence 2h30–3h / 500–600 m D+', type: 'long', planned: '⚡ Sortie de référence', status: 'pending', actual: null, notes: null }
+    ]
+  },
+
+  // ──────────────────────────────────────────────
+  // SEMAINE 7 — Affûtage
+  // ──────────────────────────────────────────────
+  {
+    id: 7, label: 'S7', dates: '24–30 août', tag: 'affut', tagLabel: 'Affûtage',
+    planned_dplus: 600, actual_dplus: null,
+    sessions: [
+      { id: 'A', name: 'EF 40 min', type: 'ef', planned: '40 min Z2', status: 'pending', actual: null, notes: null },
+      { id: 'B', name: '6–8 × côte', type: 'cote', planned: '6–8 répétitions', status: 'pending', actual: null, notes: null },
+      { id: 'C', name: 'VMA 5×2\' (r=1\'30)', type: 'quality', planned: "10' EF + 5×(2' Z5 / 1'30 trot) + 5' retour — court et vif, vivacité affûtage", status: 'pending', actual: null, notes: null },
+      { id: 'D', name: 'Trail 1h45', type: 'long', planned: 'Trail endurance', status: 'pending', actual: null, notes: null }
+    ]
+  },
+
+  // ──────────────────────────────────────────────
+  // SEMAINE 8 — Affûtage final
+  // ──────────────────────────────────────────────
+  {
+    id: 8, label: 'S8', dates: '31 août – 6 sept', tag: 'affut', tagLabel: 'Affûtage final',
+    planned_dplus: 300, actual_dplus: null,
+    sessions: [
+      { id: 'A', name: 'EF 30 min', type: 'ef', planned: '30 min Z2', status: 'pending', actual: null, notes: null },
+      { id: 'B', name: '4–5 × côte', type: 'cote', planned: '4–5 répétitions', status: 'pending', actual: null, notes: null },
+      { id: 'C', name: '4×5\' allure trail', type: 'quality', planned: "10' EF + 4×(5' Z3 haut ~140–150 / 2' trot) + 5' retour — allure course, sensations", status: 'pending', actual: null, notes: null },
+      { id: 'D', name: 'Trail EF 1h', type: 'long', planned: 'Endurance fondamentale trail', status: 'pending', actual: null, notes: null }
+    ]
+  },
+
+  // ──────────────────────────────────────────────
+  // SEMAINE DE COURSE
+  // ──────────────────────────────────────────────
+  {
+    id: 9, label: 'Course', dates: '7–12 sept', tag: 'course', tagLabel: 'Semaine de course',
+    planned_dplus: 0, actual_dplus: null,
+    sessions: [
+      { id: 'RACE', name: '🏔️ Apéro 32° — 32 km / 1000 m D+', type: 'long', planned: 'Objectif : 3h45–4h30', status: 'pending', actual: null, notes: null }
+    ]
+  }
+];
