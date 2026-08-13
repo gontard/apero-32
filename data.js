@@ -1,6 +1,6 @@
 // ============================================================
 // DATA — Mettre à jour ce fichier après chaque séance
-// Dernière MAJ : 11 août 2026 (S5-B adapté + S5-R1)
+// Dernière MAJ : 12 août 2026 (S5-B réalisé)
 // ============================================================
 
 const RACE_DATE = new Date('2026-09-12');
@@ -217,29 +217,37 @@ const WEEKS = [
         actual: { distance: 10.23, duration: '58 min 43 s', dplus: 12, fc_avg: 127, fc_max: 144, pace: '5:44/km' },
         notes: '10 août, fin d\'après-midi (18h27). Lattes, terrain plat (alt. −2 à 11 m). EF bien calibrée : FC moy 127 pile en bas de Z2, 40% Z1 / 60% Z2, 0% Z3–Z5. Dérive cardiaque notable (+14 bpm, 120→134) — chaleur résiduelle de fin de journée en août. Distance un peu au-dessus (10,2 km vs ~9–10 attendus) mais durée conforme (~59 min vs 55 prévues). Bonne reprise post-S4 régénération.'
       },
-      { id: 'B', name: '18–20 × côte remplacement', type: 'cote', planned: '18–20 reps sur côte alternative (~165 m / 13 m D+ / 8%), même parcours que S4-B. Marche 15–20 s en bas si FC > 130. Créneau frais.', status: 'pending', actual: null, notes: null },
+      {
+        id: 'B', name: '21 × côte remplacement', type: 'cote',
+        planned: '18–20 reps sur côte alternative (~165 m / 13 m D+ / 8%), même parcours que S4-B. Marche 15–20 s en bas si FC > 130. Créneau frais.',
+        status: 'done',
+        actual: { distance: 10.17, duration: '59 min 48 s', dplus: 215, fc_avg: 140, fc_max: 175 },
+        notes: '12 août, matin (8h38). Côte remplacement, 21 montées (vs 18–20 prévues). Super sensations. Progression nette vs S4-B : +6 reps (15→21), même durée (~1h), D+ 215 m vs 194 m. FC max 175 sur rep 1 (artefact probable — ceinture ou 1er effort explosif), puis toutes les reps suivantes ≤ 160. Drift maîtrisé : FC max montées 145–152 (reps 2–9) → 155–160 (reps 14–20) → 166 sur la dernière (finish). FC max moy 7 premières reps : 152, 7 dernières : 159 (+7 bpm). Dérive globale +8 bpm (136→144). Récup cardiaque bien meilleure que S4-B (où FC ne redescendait plus sous 135 dès rep 12). Créneau matinal efficace.'
+      },
       {
         id: 'R1', name: 'Proprio / mobilité / gainage', type: 'renfo',
         planned: 'Séance activation ~1h15, veille de côtes — zéro fatigue musculaire',
-        status: 'pending',
-        actual: null,
-        notes: '## Bloc 1 — Proprioception chevilles (~15 min)\n'
-          + '• Proprio plan incliné **latéral** (inversion/éversion) : 6 min [▶ Vidéo](https://www.youtube.com/watch?v=IRsMi-p1rw4)\n'
-          + '• Proprio plan incliné **sagittal** (1\'30 orteils hauts + 1\'30 talons hauts) : 3 min\n'
-          + '• Équilibre unipodal demi-ballon : 3×45 s / jambe\n'
-          + '\n## Bloc 2 — Mobilité chevilles + hanches (~15 min)\n'
-          + '• Knee-to-wall (dorsiflexion) : 3×10 / pied [▶ Vidéo](https://www.youtube.com/watch?v=pSMPd12mrg0)\n'
-          + '• Leg swings avant-arrière + latéral : 15 / côté [▶ Vidéo](https://www.youtube.com/watch?v=naW8u72lOzI)\n'
-          + '• 90/90 rotations hanches : 2×10 transitions [▶ Vidéo](https://www.youtube.com/watch?v=t4Zz6-aG8Iw)\n'
-          + '• Deep squat hold (prying) : 2×45 s [▶ Vidéo](https://www.youtube.com/watch?v=4pabcKldodc)\n'
-          + '\n## Bloc 3 — Activation jambes (~5 min)\n'
+        status: 'done',
+        actual: { duration: '~1h15', dplus: 0 },
+        notes: '11 août. Séance réalisée avec ajustements :\n'
+          + '## Bloc 1 — Proprioception chevilles\n'
+          + '• Proprio plan incliné latéral (inversion/éversion) : 8 min (vs 6 min prévu — +2 min)\n'
+          + '• Proprio plan incliné sagittal (1\'30 orteils hauts + 1\'30 talons hauts) : 3 min\n'
+          + '• Équilibre unipodal demi-ballon : 3×60 s / jambe (vs 3×45 s — +15 s/série)\n'
+          + '\n## Bloc 2 — Mobilité chevilles + hanches\n'
+          + '• Knee-to-wall (dorsiflexion) : 3×10 / pied\n'
+          + '• Leg swings avant-arrière + latéral : 15 / côté\n'
+          + '• 90/90 rotations hanches : 2×10 transitions\n'
+          + '• Deep squat hold (prying) : 2×45 s\n'
+          + '\n## Bloc 3 — Activation jambes\n'
           + '• Step-ups légers sans charge : 2×10 / jambe\n'
-          + '\n## Bloc 4 — Gainage + abdos + dos (~20–25 min)\n'
+          + '\n## Bloc 4 — Gainage + dos (abdos sautés)\n'
           + '• Gainage ventral : 3×1 min\n'
           + '• Gainage latéral : 2×45 s / côté\n'
-          + '• Abdos crunch : 3×20\n'
-          + '• Abdos obliques : 3×15 / côté\n'
-          + '• Relevé de dos (extensions lombaires) : 3×15'
+          + '• ❌ Abdos crunch : non fait\n'
+          + '• ❌ Abdos obliques : non fait\n'
+          + '• Relevé de dos (extensions lombaires) : 3×15\n'
+          + '\nBilan : proprio renforcée (+ volume latéral + équilibre), abdos/obliques zappés. L\'essentiel activation/proprio est fait pour la séance côtes de demain.'
       },
       { id: 'C', name: 'Seuil 3×8\' (r=2\'30)', type: 'quality', planned: "10' EF + 3×(8' Z4 / 2'30 trot) + 5' retour — 24' de Z4 soutenu (ajusté de 4×8')", status: 'pending', actual: null, notes: null },
       { id: 'D', name: 'Trail 2h30 / 400–500 m D+', type: 'long', planned: 'Sortie longue trail', status: 'pending', actual: null, notes: null }
