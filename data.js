@@ -1,6 +1,6 @@
 // ============================================================
 // DATA — Mettre à jour ce fichier après chaque séance
-// Dernière MAJ : 12 août 2026 (S5-B réalisé)
+// Dernière MAJ : 14 août 2026 (S5-C réalisé)
 // ============================================================
 
 const RACE_DATE = new Date('2026-09-12');
@@ -249,7 +249,22 @@ const WEEKS = [
           + '• Relevé de dos (extensions lombaires) : 3×15\n'
           + '\nBilan : proprio renforcée (+ volume latéral + équilibre), abdos/obliques zappés. L\'essentiel activation/proprio est fait pour la séance côtes de demain.'
       },
-      { id: 'C', name: 'Seuil 3×8\' (r=2\'30)', type: 'quality', planned: "10' EF + 3×(8' Z4 / 2'30 trot) + 5' retour — 24' de Z4 soutenu (ajusté de 4×8')", status: 'pending', actual: null, notes: null },
+      {
+        id: 'C', name: 'Seuil 3×8\' (r=2\'30)', type: 'quality',
+        planned: "10' EF + 3×(8' Z4 / 2'30 trot) + 5' retour — 24' de Z4 soutenu (ajusté de 4×8')",
+        status: 'done',
+        actual: { distance: 9.51, duration: '44 min 49 s', dplus: 0, fc_avg: 141, fc_max: 160, pace: '4:42/km' },
+        notes: '14 août, matin (6h42). Lattes, terrain plat (alt. 3–8 m). Créneau très matinal = conditions idéales. '
+          + '3 blocs seuil bien identifiés avec progression FC nette : '
+          + 'Bloc 1 (~7 min) : HR moy 146, max 151, allure 4:14/km — Z2 haut / Z3, mise en route ; '
+          + 'Bloc 2 (~8 min) : HR moy 152, max 155, allure 4:18/km — Z3 plein ; '
+          + 'Bloc 3 (~8 min) : HR moy 154, max 158, allure 4:10/km — Z3 haut / Z4, le seul bloc réellement en Z4 (5 min sur 8). '
+          + 'Récupérations efficaces : HR redescend à 130 (R1) et 137 (R2). '
+          + 'Intensité globale un cran sous le prescrit (Z3 haut plutôt que Z4 plein) mais allure maintenue identique à S3-C (4:14–4:18 vs 4:15–4:16) pour des blocs +2 min. '
+          + 'FC max 160 < 164 (S3-C) alors que volume supérieur → meilleure économie cardiaque. '
+          + 'Répartition globale : 14% Z1 / 38% Z2 / 34% Z3 / 14% Z4 / 0% Z5. '
+          + 'Dérive +16 bpm (133→149). → Prêt pour 3×10\' en S6.'
+      },
       { id: 'D', name: 'Trail 2h30 / 400–500 m D+', type: 'long', planned: 'Sortie longue trail', status: 'pending', actual: null, notes: null }
     ]
   },
