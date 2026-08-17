@@ -1,6 +1,6 @@
 // ============================================================
 // DATA — Mettre à jour ce fichier après chaque séance
-// Dernière MAJ : 14 août 2026 (S5-C réalisé)
+// Dernière MAJ : 16 août 2026 (S5-D réalisé)
 // ============================================================
 
 const RACE_DATE = new Date('2026-09-12');
@@ -265,7 +265,21 @@ const WEEKS = [
           + 'Répartition globale : 14% Z1 / 38% Z2 / 34% Z3 / 14% Z4 / 0% Z5. '
           + 'Dérive +16 bpm (133→149). → Prêt pour 3×10\' en S6.'
       },
-      { id: 'D', name: 'Trail 2h30 / 400–500 m D+', type: 'long', planned: 'Sortie longue trail', status: 'pending', actual: null, notes: null }
+      {
+        id: 'D', name: 'Trail 2h / 465 m D+', type: 'long',
+        planned: 'Sortie longue trail 2h30, 400–500 m D+, tracé Gardiole 18k',
+        status: 'done',
+        actual: { distance: 18.38, duration: '1 h 58', dplus: 465, fc_avg: 134, fc_max: 160, pace: '6:26/km' },
+        notes: '16 août, matin (7h02). Gardiole boucle 18k (alt. 43–191 m). Accès en vélo (11,4 km A/R, 35+33 min, FC moy 104/120). '
+          + 'Tracé GPX.studio suivi intégralement : 3 bosses principales (km 1–4 montée 140 m, km 9–10 à 145 m, km 13–17 passage au point haut 191 m). '
+          + 'FC parfaitement maîtrisée : 71% Z2, 23% Z1, 5% Z3, <1% Z4, 0% Z5. '
+          + 'Dérive cardiaque faible : +7 bpm (130→137). '
+          + 'Allure régulière ~6:00–6:50/km sur le plat, 7:00–7:35/km en montée, 5:19–5:38/km en descente. '
+          + 'Km les plus chargés en D+ : km 10 (62 m), km 13 (62 m), km 17 (61 m). '
+          + 'FC max 160 atteinte ponctuellement, jamais dépassée. '
+          + 'Durée sous le prévu (1h58 vs 2h30) mais distance et D+ conformes → allure plus rapide qu\'anticipée grâce au créneau frais matinal et terrain connu. '
+          + 'Bilan journée : 41 km totaux (vélo+trail), 526 m D+ cumulés. Excellente sortie de prépa avant la référence S6.'
+      }
     ]
   },
 
