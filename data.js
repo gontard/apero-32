@@ -1,6 +1,6 @@
 // ============================================================
 // DATA — Mettre à jour ce fichier après chaque séance
-// Dernière MAJ : 17 août 2026 (S6-A réalisé)
+// Dernière MAJ : 18 août 2026 (S6-B adapté côte remplacement)
 // ============================================================
 
 const RACE_DATE = new Date('2026-09-12');
@@ -293,7 +293,9 @@ const WEEKS = [
       { id: 'A', name: 'EF 55 min', type: 'ef', planned: '55 min Z2', status: 'done',
         actual: { distance: 10.15, duration: '56 min 08 s', dplus: 9, fc_avg: 130, fc_max: 142, pace: '5:31/km' },
         notes: '17 août, 18h37. Terrain plat côtier (alt. 1–7 m). Séance parfaitement exécutée : 76 % du temps en Z2, 24 % en Z1, jamais au-dessus de Z2 (FC max 142). Dérive cardiaque modérée (+8,5 %, FC 125→135) malgré chaleur fin d\'après-midi — bonne gestion. Distance (10,15 km) et durée (56 min) conformes au plan. Entrée en semaine de pointe réussie.' },
-      { id: 'B', name: '12 × côte 50 m', type: 'cote', planned: '12 répétitions', status: 'pending', actual: null, notes: null },
+      { id: 'B', name: '22 × côte remplacement', type: 'cote',
+        planned: '22 reps sur côte alternative (~165 m / 13 m D+ / 8%). Intensité progressive 3 blocs : B1 reps 1–8 dynamique (FC ≤ 155), B2 reps 9–16 soutenu (FC ≤ 162), B3 reps 17–22 finish maximal (FC libre). Marche 15–20 s en bas si FC > 130. Créneau matin. Objectif ~280 m D+, ~1h05–1h10.',
+        status: 'pending', actual: null, notes: null },
       { id: 'C', name: 'Seuil 3×10\' (r=3\')', type: 'quality', planned: "10' EF + 3×(10' Z4 / 3' trot) + 5' retour — 30' de Z4, séance-clé de la prépa", status: 'pending', actual: null, notes: null },
       { id: 'D', name: 'Référence 2h30–3h / 500–600 m D+', type: 'long', planned: '⚡ Sortie de référence', status: 'pending', actual: null, notes: null }
     ]
