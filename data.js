@@ -1,6 +1,6 @@
 // ============================================================
 // DATA — Mettre à jour ce fichier après chaque séance
-// Dernière MAJ : 18 août 2026 (S6-B adapté côte remplacement)
+// Dernière MAJ : 21 août 2026 (S6-C réalisé — seuil 3×10')
 // ============================================================
 
 const RACE_DATE = new Date('2026-09-12');
@@ -295,8 +295,31 @@ const WEEKS = [
         notes: '17 août, 18h37. Terrain plat côtier (alt. 1–7 m). Séance parfaitement exécutée : 76 % du temps en Z2, 24 % en Z1, jamais au-dessus de Z2 (FC max 142). Dérive cardiaque modérée (+8,5 %, FC 125→135) malgré chaleur fin d\'après-midi — bonne gestion. Distance (10,15 km) et durée (56 min) conformes au plan. Entrée en semaine de pointe réussie.' },
       { id: 'B', name: '22 × côte remplacement', type: 'cote',
         planned: '22 reps sur côte alternative (~165 m / 13 m D+ / 8%). Intensité progressive 3 blocs : B1 reps 1–8 dynamique (FC ≤ 155), B2 reps 9–16 soutenu (FC ≤ 162), B3 reps 17–22 finish maximal (FC libre). Marche 15–20 s en bas si FC > 130. Créneau matin. Objectif ~280 m D+, ~1h05–1h10.',
-        status: 'pending', actual: null, notes: null },
-      { id: 'C', name: 'Seuil 3×10\' (r=3\')', type: 'quality', planned: "10' EF + 3×(10' Z4 / 3' trot) + 5' retour — 30' de Z4, séance-clé de la prépa", status: 'pending', actual: null, notes: null },
+        status: 'done',
+        actual: { distance: 11.00, duration: '1 h 09', dplus: 249, fc_avg: 137, fc_max: 162 },
+        notes: '19 août, matin (5h01). Côte remplacement (~165 m / 13 m D+ / 8%). 22 reps réalisées, plan respecté. '
+          + 'Intensité progressive conforme aux 3 blocs prescrits : '
+          + 'Bloc 1 (reps 1–8) : FC moy montées 139, max 152 (cible ≤ 155 ✓). Récup moy en bas 124. '
+          + 'Bloc 2 (reps 9–16) : FC moy montées 144, max 157 (cible ≤ 162 ✓). Récup moy en bas 130. '
+          + 'Bloc 3 (reps 17–22) : FC moy montées 150, max 162 (finish maximal). Récup moy en bas 136. Très exigeant musculairement — jambes en feu sur les derniers 50 m de chaque rep. '
+          + 'Récup cardiaque dégradée en fin de bloc 3 : FC vallée à 145 entre reps 20–21 (pire récup de la séance). '
+          + 'Drift global +11 bpm (131→143). '
+          + 'Progression vs S5-B (21 reps) : +1 rep, +34 m D+, FC moy plus basse (137 vs 140) = meilleure économie cardiaque. FC max identique (162 vs 160). '
+          + 'Répartition FC globale : 20% Z1 / 53% Z2 / 22% Z3 / 6% Z4. '
+          + '⚠️ Tour 21 Suunto = descente+montée fusionnées (oubli marquage). Tour 20 = montée, tour 22 = descente.' },
+      { id: 'C', name: 'Seuil 3×10\' (r=3\')', type: 'quality',
+        planned: "10' EF + 3×(10' Z4 / 3' trot) + 5' retour — 30' de Z4, séance-clé de la prépa",
+        status: 'done',
+        actual: { distance: 9.80, duration: '~53 min (45 min trace + 8 min échauffement hors trace)', dplus: 3, fc_avg: 145, fc_max: 159, pace: '4:18/km (blocs seuil)' },
+        notes: '21 août, matin (6h01 trace, ~5h53 réel). Lattes, terrain plat (alt. 4–10 m). 8 min d\'échauffement manquantes sur la trace GPS. '
+          + '3 blocs seuil de 10 min parfaitement exécutés, progression FC conforme : '
+          + 'Bloc 1 (10 min) : HR moy 146, max 150, allure 4:18/km — Z3 haut, montée progressive 137→150. '
+          + 'Bloc 2 (10 min) : HR moy 150, max 154, allure 4:18/km — Z3 plein, montée 140→154. '
+          + 'Bloc 3 (10 min) : HR moy 153, max 156, allure 4:16/km — Z3 haut / Z4, montée 145→156. Sensations de mieux en mieux. '
+          + 'Récupérations (3 min) : R1 HR 143→129, R2 HR 147→135. '
+          + 'Répartition FC (trace) : 2% Z1 / 41% Z2 / 48% Z3 / 10% Z4 / 0% Z5. Drift +6 bpm (141→148). '
+          + 'Progression vs S5-C (3×8\') : blocs +2 min, allure identique (4:16–4:18 vs 4:14–4:18), FC max PLUS BASSE (156 vs 160) = meilleure économie cardiaque pour un volume seuil supérieur (+6 min de Z3–Z4). '
+          + 'Jambes fatiguées (48h post 22× côte) mais sensations en amélioration au fil de la séance — excellent signe de capacité de récupération.' },
       { id: 'D', name: 'Référence 2h30–3h / 500–600 m D+', type: 'long', planned: '⚡ Sortie de référence', status: 'pending', actual: null, notes: null }
     ]
   },
