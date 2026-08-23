@@ -1,6 +1,6 @@
 // ============================================================
 // DATA — Mettre à jour ce fichier après chaque séance
-// Dernière MAJ : 21 août 2026 (S6-C réalisé — seuil 3×10')
+// Dernière MAJ : 23 août 2026 (S6-D réalisé — sortie de référence 22k Gardiole)
 // ============================================================
 
 const RACE_DATE = new Date('2026-09-12');
@@ -16,10 +16,10 @@ const ZONES = [
 ];
 
 const OBSERVATIONS = {
-  forme: 'Début de bloc solide. Grosse capacité aérobie confirmée (FC maîtrisée, pas de dérive sur sortie longue Aubrac). Attention à ne pas surcharger trop vite.',
-  points_forts: 'Bonne tenue du plafond FC (165 max), séances menées à terme. Cheville droite confirmée guérie. Renfo/proprio intégré en routine hebdo.',
-  a_surveiller: 'Chaleur de midi → résolu (créneaux matinaux). Charge D+ systématiquement au-dessus du plan (S1 +520 m, S2 +190 m, S3 +313 m). Côte de remplacement S4–S6 : récup cardiaque insuffisante au-delà de 15 reps.',
-  ajustements: 'Créneaux frais pour côte + sortie longue. Côte alternative (~165 m / 13 m D+ / 8%) plafonnée à 18–22 reps max. Marche 15–20 sec en bas quand FC > 130.',
+  forme: 'Semaine de pointe (S6) bouclée avec succès. Sortie de référence 22k/728 m D+ validée : FC 132 moy, dérive 3,2%, 95% Z1–Z2. Progression aérobie continue (FC plus basse pour charges plus élevées). Prêt pour l\'affûtage.',
+  points_forts: 'Capacité aérobie excellente (FC maîtrisée même après semaine de pointe). Tenue de l\'effort 2h36 avec 728 m D+ sans dégradation cardiaque. Seuil 3×10\' et 22× côte encaissés la même semaine. Cheville 100% guérie.',
+  a_surveiller: 'Ischio fatigués post-S6 — surveiller en début d\'affûtage. Charge D+ systématiquement au-dessus du plan (tendance confirmée S1→S6). Côte de remplacement : récup cardiaque insuffisante au-delà de 20 reps.',
+  ajustements: 'Créneaux matinaux validés (5h–7h). Affûtage S7–S8 : respecter la baisse de volume, ne pas compenser. Étirements/massage ischio avant reprise S7.',
 };
 
 const WEEKS = [
@@ -320,7 +320,19 @@ const WEEKS = [
           + 'Répartition FC (trace) : 2% Z1 / 41% Z2 / 48% Z3 / 10% Z4 / 0% Z5. Drift +6 bpm (141→148). '
           + 'Progression vs S5-C (3×8\') : blocs +2 min, allure identique (4:16–4:18 vs 4:14–4:18), FC max PLUS BASSE (156 vs 160) = meilleure économie cardiaque pour un volume seuil supérieur (+6 min de Z3–Z4). '
           + 'Jambes fatiguées (48h post 22× côte) mais sensations en amélioration au fil de la séance — excellent signe de capacité de récupération.' },
-      { id: 'D', name: 'Référence 2h30–3h / 500–600 m D+', type: 'long', planned: '⚡ Sortie de référence', status: 'pending', actual: null, notes: null }
+      { id: 'D', name: 'Référence 22k / 728 m D+', type: 'long',
+        planned: '⚡ Sortie de référence 2h30–3h, 500–600 m D+, tracé Gardiole 22k',
+        status: 'done',
+        actual: { distance: 22.39, duration: '2 h 36', dplus: 728, fc_avg: 132, fc_max: 160, pace: '6:58/km' },
+        notes: '23 août, matin (7h07). Gardiole boucle 22k (alt. 33–221 m). Tracé GPX.studio intégralement suivi : 4 bosses (km 0–4 +175 m, km 6–12 +208 m point haut 221 m, km 14–19 +202 m, km 19–21 +131 m). '
+          + 'FC remarquablement maîtrisée : 68% Z2 / 27% Z1 / 5% Z3 / <1% Z4 / 0% Z5. FC moy 132 (sous la cible ≤ 135). '
+          + 'Dérive cardiaque excellente : +4 bpm (130→134, soit 3,2%) — nettement sous le seuil de 10%. '
+          + 'Montées gérées proprement : bosse 2 (km 10–11, +139 m D+) FC moy 144/138 max 149/148, jamais Z4. '
+          + 'Km 21 (dernière bosse, 115 m D+ sur 1 km) : FC moy 146, max 158 — seul moment Z3 soutenu, attendu sur la 4e bosse à 2h20 d\'effort. '
+          + 'Progression vs S5-D (18k Gardiole) : +4 km, +38 min, +263 m D+, et pourtant FC moy PLUS BASSE (132 vs 134) et drift PLUS FAIBLE (+4 vs +7 bpm). Excellente progression aérobie. '
+          + 'Allure régulière ~6:58/km moy, cohérente avec le terrain vallonné. '
+          + '⚠️ Ischio un peu fatigués — fatigue musculaire attendue en fin de semaine de pointe (22× côte J-4 + seuil 3×10\' J-2). '
+          + 'Bilan : sortie de référence parfaitement exécutée. FC, dérive, répartition zones = tous les voyants verts pour l\'Apéro 32°.' }
     ]
   },
 
