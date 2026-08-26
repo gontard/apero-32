@@ -1,6 +1,6 @@
 // ============================================================
 // DATA — Mettre à jour ce fichier après chaque séance
-// Dernière MAJ : 23 août 2026 (S6-D réalisé — sortie de référence 22k Gardiole)
+// Dernière MAJ : 26 août 2026 (S7-B réalisé — 6× côte Gardiole)
 // ============================================================
 
 const RACE_DATE = new Date('2026-09-12');
@@ -343,8 +343,42 @@ const WEEKS = [
     id: 7, label: 'S7', dates: '24–30 août', tag: 'affut', tagLabel: 'Affûtage',
     planned_dplus: 600, actual_dplus: null,
     sessions: [
-      { id: 'A', name: 'EF 40 min', type: 'ef', planned: '40 min Z2', status: 'pending', actual: null, notes: null },
-      { id: 'B', name: '6–8 × côte', type: 'cote', planned: '6–8 répétitions', status: 'pending', actual: null, notes: null },
+      { id: 'A', name: 'EF 40 min', type: 'ef', planned: '40 min Z2', status: 'done',
+        actual: { distance: 7.55, duration: '42 min 28 s', dplus: 51, fc_avg: 131, fc_max: 142, pace: '5:37/km' },
+        notes: '24 août, midi (12h18). Montpellier, terrain plat (alt. 27–60 m). Excellente entrée en affûtage : 79% Z2 / 21% Z1, 0% Z3–Z5. FC moy 131 en plein Z2, FC max 142 (jamais au-dessus de Z2). Dérive cardiaque quasi nulle : +2,3 bpm (1,8%) — remarquable pour un créneau midi en août. Allure 5:37/km, durée et distance conformes. Lendemain de la référence 22k/728 m D+ : aucune fatigue résiduelle apparente sur les données cardio. Affûtage lancé sur de très bonnes bases.' },
+      { id: 'B', name: '6 × côte Gardiole', type: 'cote', planned: '6–8 répétitions', status: 'done',
+        actual: { distance: 9.39, duration: '1 h 05', dplus: 291, fc_avg: 139, fc_max: 166 },
+        notes: '26 août, matin (11h38). La Gardiole, vraie côte (~45 m D+ / rep, alt. 29–97 m). 6 reps réalisées. '
+          + 'Retour sur la côte Gardiole après 3 semaines sur la côte de remplacement (S4–S6, 13 m D+ / rep) → écart de difficulté massif, ce qui explique les mauvaises sensations malgré des données cardio correctes. '
+          + 'FC max 166 = artefact ceinture (30 premières secondes, terrain plat) ; vraie FC max en montée : 164 (rep 6). '
+          + 'Progression FC par rep : FC moy montée 138 → 148 → 150 → 149 → 149 → 152 ; FC max 161 → 162 → 163 → 162 → 163 → 164. '
+          + 'Récup en bas : FC redescend à 126–132 entre reps — correcte mais effort perçu très élevé. '
+          + 'Répartition : 16% Z1 / 61% Z2 / 14% Z3 / 9% Z4 / <1% Z5. Dérive globale +4,4 bpm (3,2%). '
+          + '⚠️ Sensations très difficiles — fatigue résiduelle post-semaine de pointe (S6 : 22× côte + seuil 3×10\' + référence 22k). '
+          + 'Classique en début d\'affûtage : l\'effort perçu est pire que les données cardio (qui restent dans les normes). Les jambes n\'ont pas encore récupéré musculairement. Ne pas s\'alarmer.' },
+      { id: 'R1', name: 'Renfo / proprio', type: 'renfo',
+        planned: 'Renfo léger + proprio — récup active post-côtes affûtage',
+        status: 'done',
+        actual: { duration: '~45 min', dplus: 0 },
+        notes: '26 août. Séance post-côtes, priorité récup active + proprio. Zéro charge jambes.\n'
+          + '## Bloc 1 — Proprio chevilles (12 min)\n'
+          + '• Plan incliné latéral (inversion/éversion) : 6 min\n'
+          + '• Plan incliné sagittal (orteils hauts 1\'30 + talons hauts 1\'30) : 3 min\n'
+          + '• Équilibre unipodal demi-ballon : 3×45 s / jambe\n'
+          + '\n## Bloc 2 — Mobilité hanches + chevilles (10 min)\n'
+          + '• Knee-to-wall (dorsiflexion) : 3×10 / pied\n'
+          + '• 90/90 rotations hanches : 2×10 transitions\n'
+          + '• Leg swings avant-arrière + latéral : 12 / côté\n'
+          + '• Deep squat hold (prying) : 2×30 s\n'
+          + '\n## Bloc 3 — Gainage léger (8 min)\n'
+          + '• Gainage ventral : 2×45 s\n'
+          + '• Gainage latéral : 2×30 s / côté\n'
+          + '• Dead bug : 2×10 (lent, contrôlé)\n'
+          + '\n## Bloc 4 — Étirements + auto-massage ischio (15 min)\n'
+          + '• Foam roll ischio/quadriceps/mollets : 3 min / groupe\n'
+          + '• Étirements ischio (posture allongée) : 2×30 s / jambe\n'
+          + '• Étirements quadriceps debout : 2×30 s / jambe\n'
+          + '• Piriforme assis : 2×30 s / côté' },
       { id: 'C', name: 'VMA 5×2\' (r=1\'30)', type: 'quality', planned: "10' EF + 5×(2' Z5 / 1'30 trot) + 5' retour — court et vif, vivacité affûtage", status: 'pending', actual: null, notes: null },
       { id: 'D', name: 'Trail 1h45', type: 'long', planned: 'Trail endurance', status: 'pending', actual: null, notes: null }
     ]
