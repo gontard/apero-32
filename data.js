@@ -1,6 +1,6 @@
 // ============================================================
 // DATA — Mettre à jour ce fichier après chaque séance
-// Dernière MAJ : 26 août 2026 (S7-B réalisé — 6× côte Gardiole)
+// Dernière MAJ : 28 août 2026 (S7-C réalisé — VMA 5×2')
 // ============================================================
 
 const RACE_DATE = new Date('2026-09-12');
@@ -16,10 +16,10 @@ const ZONES = [
 ];
 
 const OBSERVATIONS = {
-  forme: 'Semaine de pointe (S6) bouclée avec succès. Sortie de référence 22k/728 m D+ validée : FC 132 moy, dérive 3,2%, 95% Z1–Z2. Progression aérobie continue (FC plus basse pour charges plus élevées). Prêt pour l\'affûtage.',
-  points_forts: 'Capacité aérobie excellente (FC maîtrisée même après semaine de pointe). Tenue de l\'effort 2h36 avec 728 m D+ sans dégradation cardiaque. Seuil 3×10\' et 22× côte encaissés la même semaine. Cheville 100% guérie.',
-  a_surveiller: 'Ischio fatigués post-S6 — surveiller en début d\'affûtage. Charge D+ systématiquement au-dessus du plan (tendance confirmée S1→S6). Côte de remplacement : récup cardiaque insuffisante au-delà de 20 reps.',
-  ajustements: 'Créneaux matinaux validés (5h–7h). Affûtage S7–S8 : respecter la baisse de volume, ne pas compenser. Étirements/massage ischio avant reprise S7.',
+  forme: 'Affûtage S7 en très bonne voie. Le creux de sensations de S7-B (6× côte, jambes lourdes) est déjà résorbé : 48h après, VMA 5×2\' tenue à 94→102% VMA avec négative split et FC contenue. La fraîcheur revient.',
+  points_forts: 'Capacité aérobie excellente (FC maîtrisée même après semaine de pointe). Référence 22k/728 m D+ : FC 132, dérive 3,2%. Cinétique de récupération remarquable (FC −25 bpm en 1\'30 sur la VMA). Vivacité intacte malgré 6 semaines de charge. Cheville 100% guérie.',
+  a_surveiller: 'Ischio à surveiller jusqu\'à la course (fatigue apparue post-S6). Charge D+ systématiquement au-dessus du plan (tendance confirmée S1→S6). Côte de remplacement : récup cardiaque insuffisante au-delà de 20 reps.',
+  ajustements: 'Créneaux matinaux validés (5h–7h). Affûtage S7–S8 : respecter la baisse de volume, ne pas compenser. S7-D (trail 1h45) à faire en EF stricte — pas de rattrapage de D+.',
 };
 
 const WEEKS = [
@@ -379,7 +379,20 @@ const WEEKS = [
           + '• Étirements ischio (posture allongée) : 2×30 s / jambe\n'
           + '• Étirements quadriceps debout : 2×30 s / jambe\n'
           + '• Piriforme assis : 2×30 s / côté' },
-      { id: 'C', name: 'VMA 5×2\' (r=1\'30)', type: 'quality', planned: "10' EF + 5×(2' Z5 / 1'30 trot) + 5' retour — court et vif, vivacité affûtage", status: 'pending', actual: null, notes: null },
+      { id: 'C', name: 'VMA 5×2\' (r=1\'30)', type: 'quality', planned: "10' EF + 5×(2' Z5 / 1'30 trot) + 5' retour — court et vif, vivacité affûtage", status: 'done',
+        actual: { distance: 8.04, duration: '39 min 54 s', dplus: 6, fc_avg: 140, fc_max: 168, pace: '4:57/km' },
+        notes: '28 août, matin (5h49). Lattes, terrain plat (alt. 0–5 m). Séance conforme au plan : 10 min d\'échauffement progressif (5:30 → 4:15/km, FC 116→143), 5×2\' + 1\'30 de trot, 13 min de retour au calme. '
+          + 'Progression parfaitement linéaire sur les 5 reps — allure ET fréquence cardiaque : '
+          + 'Rep 1 : 16,0 km/h (3:44/km, 94% VMA) — FC moy 150, max 154. '
+          + 'Rep 2 : 16,4 km/h (3:39/km, 96% VMA) — FC moy 151, max 160. '
+          + 'Rep 3 : 16,3 km/h (3:41/km, 96% VMA) — FC moy 152, max 160. '
+          + 'Rep 4 : 16,9 km/h (3:33/km, 99% VMA) — FC moy 155, max 163. '
+          + 'Rep 5 : 17,4 km/h (3:27/km, 102% VMA) — FC moy 158, max 167. '
+          + 'Négative split sur toute la série : +1,4 km/h entre rep 1 et rep 5, sans explosion cardiaque. Jambes qui se débloquent progressivement = fatigue résiduelle S6 en train de partir. '
+          + 'Récupérations très efficaces : FC redescend à 134 / 136 / 132 / 132 en 1\'30 seulement — excellente cinétique de récup. '
+          + 'Répartition FC : 11% Z1 / 56% Z2 / 17% Z3 / 14% Z4 / 1% Z5. Dérive quasi nulle (+2 bpm, 139→141). '
+          + 'Intensité réelle plutôt Z4 haut que Z5 plein (seule la rep 5 touche Z5, FC max 167). Sur des reps de 2\', c\'est le comportement attendu : la FC n\'a pas le temps de plafonner. L\'allure, elle, était bien à 94–102% VMA → objectif vivacité atteint. '
+          + '✅ Net contraste avec S7-B (6× côte Gardiole, sensations très difficiles) : 48h plus tard, jambes vives et allures VMA tenues. L\'affûtage fait son effet.' },
       { id: 'D', name: 'Trail 1h45', type: 'long', planned: 'Trail endurance', status: 'pending', actual: null, notes: null }
     ]
   },
