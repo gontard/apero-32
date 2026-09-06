@@ -1,6 +1,6 @@
 // ============================================================
 // DATA — Mettre à jour ce fichier après chaque séance
-// Dernière MAJ : 28 août 2026 (S7-C réalisé — VMA 5×2')
+// Dernière MAJ : 5 septembre 2026 (S8-C réalisé — 4×5' non tenu, requalifié en EF trail vallonnée)
 // ============================================================
 
 const RACE_DATE = new Date('2026-09-12');
@@ -16,10 +16,10 @@ const ZONES = [
 ];
 
 const OBSERVATIONS = {
-  forme: 'Affûtage S7 en très bonne voie. Le creux de sensations de S7-B (6× côte, jambes lourdes) est déjà résorbé : 48h après, VMA 5×2\' tenue à 94→102% VMA avec négative split et FC contenue. La fraîcheur revient.',
-  points_forts: 'Capacité aérobie excellente (FC maîtrisée même après semaine de pointe). Référence 22k/728 m D+ : FC 132, dérive 3,2%. Cinétique de récupération remarquable (FC −25 bpm en 1\'30 sur la VMA). Vivacité intacte malgré 6 semaines de charge. Cheville 100% guérie.',
-  a_surveiller: 'Ischio à surveiller jusqu\'à la course (fatigue apparue post-S6). Charge D+ systématiquement au-dessus du plan (tendance confirmée S1→S6). Côte de remplacement : récup cardiaque insuffisante au-delà de 20 reps.',
-  ajustements: 'Créneaux matinaux validés (5h–7h). Affûtage S7–S8 : respecter la baisse de volume, ne pas compenser. S7-D (trail 1h45) à faire en EF stricte — pas de rattrapage de D+.',
+  forme: 'Excellente et en progression. S8-B apporte la preuve chiffrée que l\'affûtage fonctionne : sur la côte Gardiole identique à S7-B, la FC redescend à 119–122 entre les reps (vs 126–132 une semaine avant) et la rep 1 plafonne à 155 au lieu de 161. La récupération cardiaque s\'améliore de séance en séance. À 9 jours de la course, la fraîcheur monte.',
+  points_forts: 'Capacité aérobie excellente (FC maîtrisée même après semaine de pointe). Référence 22k/728 m D+ : FC 132, dérive 3,2%. S7-D : 49 m D+/km avec FC max 154 et dérive 2,3% = meilleure gestion de montée de la prépa. Cinétique de récupération remarquable (FC −25 bpm en 1\'30 sur la VMA). Cheville 100% guérie.',
+  a_surveiller: 'Ischio à surveiller jusqu\'à la course (fatigue apparue post-S6, jamais suivie d\'une vraie semaine légère). Charge D+ systématiquement au-dessus du plan : S7 a atteint 1 010 m (vs 600 prévus) et S8 est à 452 m après 3 séances sur 4 (plafond 300 m dépassé de 50%). Les séances de qualité de S8 n\'ont pas pu être tenues (S8-C requalifiée en EF faute de terrain adapté).',
+  ajustements: 'Créneaux matinaux validés (5h–7h). S8-D (dim. 6 sept) : trail STRICTEMENT plat, 0–50 m D+, 45 min à 1h en Z2 — le plafond D+ est largement dépassé et la descente est la charge à éviter. Semaine de course : 3 sorties courtes, 0 m de D+, repos complet jeudi. S9-C (mer. 9 sept, 4×30" vif) devient la seule séance de rythme restante — à faire sur terrain plat et roulant. Priorité absolue à la fraîcheur musculaire, plus aucun gain de forme possible.',
 };
 
 const WEEKS = [
@@ -393,7 +393,16 @@ const WEEKS = [
           + 'Répartition FC : 11% Z1 / 56% Z2 / 17% Z3 / 14% Z4 / 1% Z5. Dérive quasi nulle (+2 bpm, 139→141). '
           + 'Intensité réelle plutôt Z4 haut que Z5 plein (seule la rep 5 touche Z5, FC max 167). Sur des reps de 2\', c\'est le comportement attendu : la FC n\'a pas le temps de plafonner. L\'allure, elle, était bien à 94–102% VMA → objectif vivacité atteint. '
           + '✅ Net contraste avec S7-B (6× côte Gardiole, sensations très difficiles) : 48h plus tard, jambes vives et allures VMA tenues. L\'affûtage fait son effet.' },
-      { id: 'D', name: 'Trail 1h45', type: 'long', planned: 'Trail endurance', status: 'pending', actual: null, notes: null }
+      { id: 'D', name: 'Trail 1h42 / 662 m D+', type: 'long', planned: 'Trail endurance 1h45, EF stricte', status: 'done',
+        actual: { distance: 13.60, duration: '1 h 42', dplus: 662, fc_avg: 134, fc_max: 154, pace: '7:33/km' },
+        notes: '30 août, matin (7h35). La Gardiole (alt. 42–197 m). Super sensations. '
+          + 'Durée pile dans la cible (1h42 vs 1h45) mais D+ très au-dessus d\'une EF d\'affûtage : 662 m sur 13,6 km, soit 49 m/km — le ratio le plus élevé de toute la prépa (référence S6-D : 33 m/km). '
+          + 'FC néanmoins parfaitement maîtrisée : 68% Z2 / 20% Z1 / 12% Z3 / 0% Z4 / 0% Z5. FC moy 134, FC max 154 (jamais Z4). '
+          + 'Dérive cardiaque quasi nulle : +3 bpm (133→136, 2,3%) — excellent sur un profil aussi vallonné. '
+          + 'Km les plus chargés : km 8 (110 m D+, FC moy 142), km 1 (107 m, FC moy 124), km 12 (75 m, FC moy 142). '
+          + 'Sur les 3 km à plus de 75 m D+, la FC moy reste ≤ 142 et le max ≤ 154 → gestion en montée impeccable. '
+          + '✅ Confirmation de S7-C : les sensations sont revenues. Jambes fraîches, cœur bas sur un terrain exigeant. '
+          + '⚠️ Seul point d\'attention : la charge D+ reste au-dessus du plan (tendance de toute la prépa). S8 = affûtage final, il faut vraiment lever le pied sur le dénivelé (≤ 300 m sur la semaine).' }
     ]
   },
 
@@ -404,9 +413,39 @@ const WEEKS = [
     id: 8, label: 'S8', dates: '31 août – 6 sept', tag: 'affut', tagLabel: 'Affûtage final',
     planned_dplus: 300, actual_dplus: null,
     sessions: [
-      { id: 'A', name: 'EF 30 min', type: 'ef', planned: '30 min Z2', status: 'pending', actual: null, notes: null },
-      { id: 'B', name: '4–5 × côte', type: 'cote', planned: '4–5 répétitions', status: 'pending', actual: null, notes: null },
-      { id: 'C', name: '4×5\' allure trail', type: 'quality', planned: "10' EF + 4×(5' Z3 haut ~140–150 / 2' trot) + 5' retour — allure course, sensations", status: 'pending', actual: null, notes: null },
+      { id: 'A', name: 'EF 42 min', type: 'ef', planned: '30 min Z2', status: 'done',
+        actual: { distance: 7.49, duration: '41 min 48 s', dplus: 55, fc_avg: 130, fc_max: 140, pace: '5:35/km' },
+        notes: '31 août, midi (12h15). Montpellier, terrain vallonné léger (alt. 26–56 m). '
+          + 'EF de manuel : 80% Z2 / 20% Z1, 0% Z3–Z5, FC max 140 — jamais sortie de Z2 sur toute la séance. '
+          + 'Montée en FC très progressive (km 1 à 114 de moy), puis plateau parfaitement stable à 130–135 du km 2 au km 7. Dérive +6 bpm (127→133, 4,7%) — normale pour un créneau midi. '
+          + 'Allure régulière 5:13–5:44/km hors km 1 et km 7 (retour au calme). '
+          + '⚠️ Durée au-dessus du plan : 42 min vs 30 prévues (+40%). Sur une EF en Z2 stricte l\'impact est faible, mais c\'est exactement le réflexe à contenir en affûtage final. '
+          + 'Comparaison avec S7-A (même parcours, même créneau) : distance identique (7,49 vs 7,55 km), FC moy 130 vs 131, allure 5:35 vs 5:37/km → état de forme stable, aucune fatigue résiduelle du trail de la veille (13,6 km / 662 m D+).' },
+      { id: 'B', name: '5 × côte Gardiole', type: 'cote', planned: '4–5 répétitions', status: 'done',
+        actual: { distance: 8.61, duration: '53 min 47 s', dplus: 252, fc_avg: 138, fc_max: 164, pace: '6:15/km' },
+        notes: '3 sept., midi (12h00). La Gardiole, vraie côte (~44 m D+ / rep, alt. 27–94 m). 5 reps = haut de la fourchette prévue. '
+          + 'Détail des reps (durée / D+ / FC bas au départ / FC max montée) : '
+          + 'Rep 1 : ~2:00 / +43 m / 128 / 155. '
+          + 'Rep 2 : ~2:05 / +44 m / 122 / 157. '
+          + 'Rep 3 : ~2:20 / +45 m / 122 / 159. '
+          + 'Rep 4 : ~2:20 / +44 m / 120 / 163. '
+          + 'Rep 5 : ~2:20 / +43 m / 129 / 164. '
+          + '✅ Récupération en bas remarquable : FC redescend à 119–122 entre les reps 1→4 (vs 126–132 sur S7-B). C\'est le meilleur indicateur d\'affûtage de la séance — le cœur récupère plus vite qu\'il y a une semaine sur le même terrain. '
+          + 'Départ nettement plus frais : FC max de la rep 1 à 155 contre 161 sur S7-B, pour une côte identique. La montée en charge est progressive (155→164) au lieu d\'être plafonnée d\'entrée. '
+          + 'Comparaison S7-B (6 reps) : −1 rep, −39 m D+, −11 min, FC moy quasi identique (138 vs 139), FC max identique (164). Même sollicitation cardiaque pour 17% de charge en moins. '
+          + 'Répartition : 17% Z1 / 47% Z2 / 26% Z3 / 10% Z4 / 0% Z5. Dérive +12 bpm (132→144) — élevée, mais séance à midi début septembre et retour couru en Z3 (km 7–8 à 5:50/km, FC 138 puis 147). '
+          + '🌡️ Ressenti : chaleur marquée, séance trouvée difficile — comme S7-B. Les deux seules séances aux sensations dures de l\'affûtage sont les deux côtes Gardiole à midi (11h38 et 12h00) ; toutes les séances aux bonnes sensations ont eu lieu avant 8h. Même leçon qu\'en S1→S2 (côtes à 29 °C « difficile, pauses en haut » → créneau 7h42 = 6 min plus rapide à charge égale). L\'effort perçu ici est thermique et lié à la vraie côte, pas un signe de fatigue : les données de récup cardiaque disent l\'inverse. '
+          + '⚠️ Cumul D+ S8 = 307 m après 2 séances (55 + 252) : le plafond de 300 m est déjà atteint alors qu\'il reste S8-C et S8-D. → S8-D à faire en trail PLAT (≤ 100 m D+), pas sur la Gardiole. Les 252 m de DESCENTE (5 reps) sont la vraie charge à ne plus répéter — travail excentrique, et ischios signalés depuis S6.' },
+      { id: 'C', name: 'EF trail vallonnée 46 min (4×5\' non tenu)', type: 'ef',
+        planned: "Prévu : 10' EF + 4×(5' Z3 haut ~140–150 / 2' trot) + 5' retour. Réalisé : EF trail vallonnée — terrain non adapté aux blocs.",
+        status: 'done',
+        actual: { distance: 6.86, duration: '46 min 20 s', dplus: 145, fc_avg: 132, fc_max: 155, pace: '6:44/km' },
+        notes: '5 sept., matin (9h45). Terrain vallonné (alt. 38–86 m). Les 4×5\' n\'ont pas pu être tenus : le terrain ne permettait pas de maintenir une allure régulière sur 5 min. Séance requalifiée en EF trail vallonnée. '
+          + 'Répartition : 26% Z1 / 70% Z2 / 4% Z3 / 0% Z4 / 0% Z5. FC moy 132, FC max 155 — la séance est restée en EF, l\'objectif Z3 haut (140–150 en continu) n\'a pas été atteint. '
+          + 'Profil par km : km 1–2 échauffement (5:47 puis 6:09/km, FC 112→125), km 3–5 partie vallonnée (km 4 = 65 m D+ en 9:29/km, marche probable ; FC moy 136–138, max 155 au km 5), km 6–7 retour roulant (5:54 puis 5:41/km, FC 135–140). '
+          + 'Dérive +11 bpm (126→137) — attribuable à la montée du km 4 plus qu\'à la chaleur (créneau 9h45). '
+          + '📉 Impact sur l\'affûtage : la dernière séance avec du rythme de S8 est perdue. Ce n\'est pas grave à J-7 — il n\'y a plus de gain de forme à faire, et S7-C (VMA 5×2\' à 94–102% VMA) a déjà validé la vivacité. Le rappel d\'allure sera fait par S9-C (mercredi 9 sept, 4×30" vif), qui devient la seule séance de rythme avant la course. À faire impérativement sur terrain PLAT et roulant.\n'
+          + '⚠️ Cumul D+ S8 = 452 m après 3 séances (55 + 252 + 145) vs 300 m prévus. Le plafond est dépassé de 50%. → S8-D (dimanche 6 sept) : trail STRICTEMENT plat, 0–50 m D+ max, 45 min à 1h en Z2. Pas de Gardiole, pas de côte de remplacement, pas de vallonné. La descente est la charge à éviter (ischios signalés depuis S6).' },
       { id: 'D', name: 'Trail EF 1h', type: 'long', planned: 'Endurance fondamentale trail', status: 'pending', actual: null, notes: null }
     ]
   },
@@ -418,7 +457,30 @@ const WEEKS = [
     id: 9, label: 'Course', dates: '7–12 sept', tag: 'course', tagLabel: 'Semaine de course',
     planned_dplus: 0, actual_dplus: null,
     sessions: [
-      { id: 'RACE', name: '🏔️ Apéro 32° — 32 km / 1000 m D+', type: 'long', planned: 'Objectif : 3h45–4h30', status: 'pending', actual: null, notes: null }
+      { id: 'A', name: 'Lun 7 — EF 30 min', type: 'ef',
+        planned: '30 min Z2 stricte (FC ≤ 140), terrain plat, D+ 0. Déblocage post-S8 : allure libre mais confortable, aucune accélération.',
+        status: 'pending', actual: null,
+        notes: 'Objectif : relancer la circulation après la dernière sortie de S8. Si les jambes sont lourdes, réduire à 20 min sans hésiter — cette séance n\'apporte rien physiologiquement, elle sert juste à ne pas rester à l\'arrêt.' },
+      { id: 'B', name: 'Mar 8 — Repos / mobilité', type: 'renfo',
+        planned: 'Repos de course. Optionnel : 20 min mobilité + proprio chevilles, zéro charge musculaire (pas de squats, pas de fentes, pas de gainage lourd).',
+        status: 'pending', actual: null,
+        notes: 'Dernière fenêtre pour du travail articulaire. À partir de mercredi, plus aucun stimulus nouveau : le corps ne fait plus que récupérer.' },
+      { id: 'C', name: 'Mer 9 — EF 25 min + 4×30" vif', type: 'quality',
+        planned: '15 min EF Z2 + 4×(30" vif ~16 km/h / 1\'30 trot) + 5 min retour au calme. Terrain plat, D+ 0. Dernière séance avec du rythme.',
+        status: 'pending', actual: null,
+        notes: 'Séance d\'entretien nerveux, pas d\'entraînement : 2 min d\'effort vif au total. Le but est de rappeler au système neuromusculaire ce qu\'est une allure rapide, sans créer une once de fatigue. Ne PAS chercher la performance sur les 30" — sensation de facilité obligatoire. Si la FC monte au-dessus de 165, c\'est que tu forces trop.' },
+      { id: 'D', name: 'Jeu 10 — Repos complet', type: 'renfo',
+        planned: 'Repos total. Aucune activité. Sommeil en priorité.',
+        status: 'pending', actual: null,
+        notes: 'J-2. C\'est la journée la plus importante de la semaine et il n\'y a rien à y faire. Début du chargement glucidique si tu veux en faire un (3 jours à ~7 g/kg).' },
+      { id: 'E', name: 'Ven 11 — Repos ou 15\' déblocage', type: 'ef',
+        planned: 'Repos, ou 15 min trot très léger Z1 (FC ≤ 125) + 2×20" progressifs si le trajet le permet. Terrain plat.',
+        status: 'pending', actual: null,
+        notes: 'Journée de trajet vers Prades d\'Aubrac (~3h de route depuis Montpellier). Le déblocage n\'est utile que pour dénouer les jambes après la voiture — si tu arrives tard, repos sans regret. Préparation du sac + repérage du départ si l\'horaire le permet. Coucher tôt.' },
+      { id: 'RACE', name: '🏔️ Apéro 32° — 32 km / 1000 m D+', type: 'long',
+        planned: '⚡ Objectif : 3h45–4h30. Stratégie FC : Z2 (127–146) sur les 20 premiers km, Z3 autorisée en montée après le km 20, jamais Z4 avant le km 25.',
+        status: 'pending', actual: null,
+        notes: 'Repères issus de la prépa : sur la référence 22k/728 m D+, FC moy 132 et dérive 3,2% → la cible de FC moy course est 135–140 (l\'enjeu du jour et les 10 km supplémentaires justifient +3 à +8 bpm). Partir volontairement trop lentement sur la première bosse : c\'est l\'erreur classique et la seule vraiment coûteuse. Allure de référence sur terrain vallonné connu : 6:58/km (S6-D) → sur 32 km avec 1000 m D+, tabler sur 7:00–8:00/km selon la technicité.' }
     ]
   }
 ];
