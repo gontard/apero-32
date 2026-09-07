@@ -1,6 +1,6 @@
 // ============================================================
 // DATA — Mettre à jour ce fichier après chaque séance
-// Dernière MAJ : 5 septembre 2026 (S8-C réalisé — 4×5' non tenu, requalifié en EF trail vallonnée)
+// Dernière MAJ : 6 septembre 2026 (S8-D réalisé — EF plate 10 km / 3 m D+ · S8 clôturée, entrée en semaine de course)
 // ============================================================
 
 const RACE_DATE = new Date('2026-09-12');
@@ -16,10 +16,10 @@ const ZONES = [
 ];
 
 const OBSERVATIONS = {
-  forme: 'Excellente et en progression. S8-B apporte la preuve chiffrée que l\'affûtage fonctionne : sur la côte Gardiole identique à S7-B, la FC redescend à 119–122 entre les reps (vs 126–132 une semaine avant) et la rep 1 plafonne à 155 au lieu de 161. La récupération cardiaque s\'améliore de séance en séance. À 9 jours de la course, la fraîcheur monte.',
+  forme: 'Excellente. Deux preuves chiffrées de l\'affûtage : S8-B (côte Gardiole identique à S7-B) montre une FC qui redescend à 119–122 entre les reps vs 126–132 une semaine avant, et S8-D signe le meilleur rapport allure/FC de la prépa — 5:33/km à FC moy 127, plus rapide ET plus bas que S8-A six jours plus tôt. À 6 jours de la course, la fraîcheur est là.',
   points_forts: 'Capacité aérobie excellente (FC maîtrisée même après semaine de pointe). Référence 22k/728 m D+ : FC 132, dérive 3,2%. S7-D : 49 m D+/km avec FC max 154 et dérive 2,3% = meilleure gestion de montée de la prépa. Cinétique de récupération remarquable (FC −25 bpm en 1\'30 sur la VMA). Cheville 100% guérie.',
-  a_surveiller: 'Ischio à surveiller jusqu\'à la course (fatigue apparue post-S6, jamais suivie d\'une vraie semaine légère). Charge D+ systématiquement au-dessus du plan : S7 a atteint 1 010 m (vs 600 prévus) et S8 est à 452 m après 3 séances sur 4 (plafond 300 m dépassé de 50%). Les séances de qualité de S8 n\'ont pas pu être tenues (S8-C requalifiée en EF faute de terrain adapté).',
-  ajustements: 'Créneaux matinaux validés (5h–7h). S8-D (dim. 6 sept) : trail STRICTEMENT plat, 0–50 m D+, 45 min à 1h en Z2 — le plafond D+ est largement dépassé et la descente est la charge à éviter. Semaine de course : 3 sorties courtes, 0 m de D+, repos complet jeudi. S9-C (mer. 9 sept, 4×30" vif) devient la seule séance de rythme restante — à faire sur terrain plat et roulant. Priorité absolue à la fraîcheur musculaire, plus aucun gain de forme possible.',
+  a_surveiller: 'Ischio à surveiller jusqu\'à la course (fatigue apparue post-S6, jamais suivie d\'une vraie semaine légère) — mais aucune charge excentrique depuis S8-B (3 sept.), soit 9 jours avant la course. Bilan D+ S8 : 455 m vs 300 prévus, dépassement concentré sur S8-B/S8-C et corrigé par S8-D. Seul manque réel : la séance de qualité de S8 n\'a pas eu lieu (S8-C requalifiée en EF faute de terrain).',
+  ajustements: 'S8 clôturée, entrée en semaine de course. Programme : lun 7 EF 30 min Z2 (plat), mar 8 repos/mobilité, mer 9 EF 25 min + 4×30" vif — seule séance de rythme restante, à faire sur terrain plat et roulant, jeu 10 repos complet, ven 11 repos ou 15\' de déblocage post-trajet. 0 m de D+ sur toute la semaine. Priorité absolue à la fraîcheur musculaire : plus aucun gain de forme n\'est possible, seule la fatigue peut encore être ajoutée.',
 };
 
 const WEEKS = [
@@ -446,7 +446,16 @@ const WEEKS = [
           + 'Dérive +11 bpm (126→137) — attribuable à la montée du km 4 plus qu\'à la chaleur (créneau 9h45). '
           + '📉 Impact sur l\'affûtage : la dernière séance avec du rythme de S8 est perdue. Ce n\'est pas grave à J-7 — il n\'y a plus de gain de forme à faire, et S7-C (VMA 5×2\' à 94–102% VMA) a déjà validé la vivacité. Le rappel d\'allure sera fait par S9-C (mercredi 9 sept, 4×30" vif), qui devient la seule séance de rythme avant la course. À faire impérativement sur terrain PLAT et roulant.\n'
           + '⚠️ Cumul D+ S8 = 452 m après 3 séances (55 + 252 + 145) vs 300 m prévus. Le plafond est dépassé de 50%. → S8-D (dimanche 6 sept) : trail STRICTEMENT plat, 0–50 m D+ max, 45 min à 1h en Z2. Pas de Gardiole, pas de côte de remplacement, pas de vallonné. La descente est la charge à éviter (ischios signalés depuis S6).' },
-      { id: 'D', name: 'Trail EF 1h', type: 'long', planned: 'Endurance fondamentale trail', status: 'pending', actual: null, notes: null }
+      { id: 'D', name: 'EF plate 56 min', type: 'long',
+        planned: 'Révisé : trail STRICTEMENT plat, 0–50 m D+, 45 min à 1h en Z2 (plafond D+ de S8 dépassé)',
+        status: 'done',
+        actual: { distance: 10.06, duration: '55 min 56 s', dplus: 3, fc_avg: 127, fc_max: 137, pace: '5:33/km' },
+        notes: '6 sept., matin (8h59). Terrain totalement plat (alt. 3–10 m). ✅ Consigne respectée à la lettre : 3 m de D+ sur 10 km — la séance la plus plate de toute la prépa. '
+          + 'Répartition : 40% Z1 / 60% Z2 / 0% Z3 / 0% Z4 / 0% Z5. FC moy 127 (pile à la frontière Z1/Z2), FC max 137 — jamais sortie de Z2 sur 56 min. '
+          + 'Allure remarquablement régulière : 5:21–5:47/km sur les 10 km, sans aucune dérive d\'allure. FC par km : 111 (km 1) → 121 → 126 → plateau 126–133 du km 4 au km 10. '
+          + 'Dérive +9 bpm (122→131) — normale sur 56 min, et le plateau reste sous 135. '
+          + '📊 Comparaison directe avec S8-A (même type d\'effort, 6 jours plus tôt) : +2,5 km, +14 min, allure PLUS RAPIDE (5:33 vs 5:35/km) pour une FC moy PLUS BASSE (127 vs 130) et une FC max plus basse (137 vs 140). C\'est le meilleur rapport allure/FC de l\'affûtage. '
+          + '✅ S8 clôturée proprement. Bilan D+ S8 : 455 m (55 + 252 + 145 + 3) vs 300 prévus — dépassement concentré sur S8-B et S8-C, mais la dernière séance a corrigé la trajectoire. Aucune charge excentrique sur les 6 jours avant la course.' }
     ]
   },
 
